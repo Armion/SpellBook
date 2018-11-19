@@ -10,9 +10,7 @@ import android.widget.TextView;
 import com.example.armion.spellbook.R;
 import com.example.armion.spellbook.spell.Metamagic;
 
-import java.util.Arrays;
 import java.util.List;
-
 
 
 public class MetaListAdapter extends RecyclerView.Adapter<MetaListAdapter.MyViewHolder>{
@@ -21,14 +19,14 @@ public class MetaListAdapter extends RecyclerView.Adapter<MetaListAdapter.MyView
 
 
 
-    private List<Metamagic> selectedList;
+    private List<Integer> selectedList;
     private List<Metamagic> metamagicList;
 
 
      private final AppCompatActivity parent;
 
 
-    public MetaListAdapter(AppCompatActivity parent, List<Metamagic> selectedList, List<Metamagic> metamagicList){
+    public MetaListAdapter(AppCompatActivity parent, List<Integer> selectedList, List<Metamagic> metamagicList){
         super();
 
         this.parent = parent;
@@ -66,6 +64,42 @@ public class MetaListAdapter extends RecyclerView.Adapter<MetaListAdapter.MyView
 
     }
 
+    /**
+     * a method tu delete an item from the list and update the adapter
+     * @param index the index of the item to edit
+     */
+    public void deleteItem(int index){
+        //let's be safe !
+        if(index >= 0 && index < metamagicList.size())
+        {
+            this.metamagicList.remove(index);
+            this.notifyItemRemoved(index);
+            this.notifyItemRangeChanged(0, metamagicList.size());
+        }
+
+    }
+
+    /**
+     * a method to edit an object from the list and update the adapter
+     * @param index the index of the item to edit
+     */
+    public void editItem(int index){
+
+        //let's be safe
+        if(index >= 0 && index < metamagicList.size()) {
+            this.metamagicList.set(index, new Metamagic("nom de meta magie au hasard", 99, "bravo le veau !"));
+            this.notifyItemChanged(index);
+        }
+    }
+
+    public void addItem(){
+
+        this.metamagicList.add(new Metamagic("ajout", 42, "la bonne farce ..."));
+        this.notifyDataSetChanged();
+
+    }
+
+
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
@@ -77,42 +111,52 @@ public class MetaListAdapter extends RecyclerView.Adapter<MetaListAdapter.MyView
         private Metamagic currentMetamagic;
 
         /**
-         * create the view holder and binding is field to the variables
+         * create the view holder and binding his field to the variables
          * @param itemView
          */
         public MyViewHolder(final View itemView) {
+
             super(itemView);
 
             //the field for the view
-            name = (itemView.findViewById(R.id.metamagicName));
-            description = ( itemView.findViewById(R.id.metaSpellDescription));
-            level = ( itemView.findViewById(R.id.metaSpellLevel));
+            name = itemView.findViewById(R.id.metamagicName);
+            description =  itemView.findViewById(R.id.metaSpellDescription);
+            level =  itemView.findViewById(R.id.metaSpellLevel);
 
 
 
 
 
-            //when the user click on the list, we currently call an alert which display the metamagic
+            //when the user click on the item we mark the item as selected and add him in the selected item list
             itemView.setOnClickListener(new View.OnClickListener() {
+
                 @Override
                 public void onClick(View view) {
 
-
-
-
+                    //let's update the selectedList
                     if(view.isSelected()){
                         view.setSelected(false);
-                        selectedList.remove(currentMetamagic);
+                        selectedList.remove((Integer) getAdapterPosition());
                     }
                     else{
                         view.setSelected(true);
-                        selectedList.add(currentMetamagic);
+                        selectedList.add((Integer) getAdapterPosition());
                     }
 
                     //when a meta magic is selected we allow the modifications
                     if(! (selectedList == null) && ! selectedList.isEmpty()){
                         parent.findViewById(R.id.buttonDelete).setEnabled(true);
-                        parent.findViewById(R.id.buttonEdit).setEnabled(true);
+
+                        //we allow modification only if there is one item selected
+                        if(selectedList.size() == 1)
+                        {
+                            parent.findViewById(R.id.buttonEdit).setEnabled(true);
+                        }
+                        else
+                        {
+                            parent.findViewById(R.id.buttonEdit).setEnabled(false);
+                        }
+
                     }
                     else{
                         parent.findViewById(R.id.buttonDelete).setEnabled(false);
