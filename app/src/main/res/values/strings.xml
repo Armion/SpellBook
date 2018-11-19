@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">SpellBook</string>
+    <string name="meta_spell_name">Meta Magic</string>
+    <string name="spell_book_name">Spell Book</string>
+    <string name="prepared_spell_name">Prepared Spell</string>
+    <string name="statistics_name">Character</string>
+    <string name="create">Create</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>

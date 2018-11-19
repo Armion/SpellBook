@@ -1,5 +1,11 @@
+/**
+ * @author Armion
+ * @version 0.01
+ */
+
 package com.example.armion.spellbook.hud;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -7,7 +13,8 @@ import android.widget.Toast;
 
 import com.example.armion.spellbook.R;
 
-public class SpellBook extends AppCompatActivity {
+public class SummaryActivity extends AppCompatActivity {
+
 
 
     private float x1,x2;
@@ -17,8 +24,9 @@ public class SpellBook extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_spell_book);
+        setContentView(R.layout.activity_summary);
     }
+
 
     @Override
     public boolean onTouchEvent(MotionEvent event)
@@ -37,12 +45,14 @@ public class SpellBook extends AppCompatActivity {
                     // Left to Right swipe action
                     if (x2 > x1) {
                         Toast.makeText(this, "Left to Right swipe", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(this, StatisticsActivity.class));
                     }
 
                     // Right to left swipe action
                     else
                     {
                         Toast.makeText(this, "Right to Left swipe", Toast.LENGTH_SHORT).show ();
+                        startActivity(new Intent(this, PreparedSpellsActivity.class));
 
                     }
 

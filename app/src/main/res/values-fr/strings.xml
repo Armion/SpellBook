@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SpellBook</string>
+    <string name="statistics_name">Personnage</string>
+    <string name="create">Creer</string>
+    <string name="delete">Supprimer</string>
+    <string name="edit">Editer</string>
+    <string name="meta_spell_name">Meta Magie</string>
+    <string name="prepared_spell_name">Sorts Preparés</string>
+    <string name="spell_book_name">Livre de Sorts</string>
+</resources>
