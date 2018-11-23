@@ -10,7 +10,16 @@ import android.widget.TextView;
 import com.example.armion.spellbook.R;
 import com.example.armion.spellbook.spell.Metamagic;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class MetaListAdapter extends RecyclerView.Adapter<MetaListAdapter.MyViewHolder>{
@@ -68,7 +77,8 @@ public class MetaListAdapter extends RecyclerView.Adapter<MetaListAdapter.MyView
      * a method tu delete an item from the list and update the adapter
      * @param index the index of the item to edit
      */
-    public void deleteItem(int index){
+    public List<Metamagic> deleteItem(int index){
+
         //let's be safe !
         if(index >= 0 && index < metamagicList.size())
         {
@@ -77,26 +87,82 @@ public class MetaListAdapter extends RecyclerView.Adapter<MetaListAdapter.MyView
             this.notifyItemRangeChanged(0, metamagicList.size());
         }
 
+        return metamagicList;
+
     }
 
     /**
      * a method to edit an object from the list and update the adapter
      * @param index the index of the item to edit
      */
-    public void editItem(int index){
+    public List<Metamagic> editItem(int index){
 
         //let's be safe
         if(index >= 0 && index < metamagicList.size()) {
             this.metamagicList.set(index, new Metamagic("nom de meta magie au hasard", 99, "bravo le veau !"));
             this.notifyItemChanged(index);
         }
+
+        return metamagicList;
     }
 
-    public void addItem(){
+    public List<Metamagic> addItem(){
 
         this.metamagicList.add(new Metamagic("ajout", 42, "la bonne farce ..."));
         this.notifyDataSetChanged();
 
+        return this.metamagicList;
+
+    }
+
+    public List<Metamagic> addItem(Metamagic metamagic){
+
+        this.metamagicList.add(metamagic);
+        this.notifyDataSetChanged();
+
+        return metamagicList;
+
+    }
+
+    public void saveMetamagic(){
+
+        FileOutputStream output = null;
+
+        JSONObject meta ;
+        JSONArray data = new JSONArray();
+        int count =0;
+
+        try {
+
+            //firstly let's create the JSON array with all the meta spell
+            for(Metamagic m : metamagicList){
+
+                meta = new JSONObject();
+                meta.put("name", m.getName());
+                meta.put("level", m.getLevel());
+                meta.put("description", m.getDescription());
+
+                data.put(count, meta);
+
+                count ++;
+            }
+
+            //then we have to write it in the file
+            output = parent.openFileOutput("metamagic.json", MODE_PRIVATE);
+            output.write(data.toString().getBytes());
+            if(output != null){
+                output.close();
+            }
+
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

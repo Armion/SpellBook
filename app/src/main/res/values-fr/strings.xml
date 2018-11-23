@@ -8,4 +8,8 @@
     <string name="meta_spell_name">Meta Magie</string>
     <string name="prepared_spell_name">Sorts Preparés</string>
     <string name="spell_book_name">Livre de Sorts</string>
+    <string name="name">Nom</string>
+    <string name="level">Niveau</string>
+    <string name="description">Description</string>
+    <string name="create_metamagic">Creer Magie</string>
 </resources>

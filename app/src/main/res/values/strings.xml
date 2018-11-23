@@ -7,4 +7,8 @@
     <string name="create">Create</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="name">Name</string>
+    <string name="level">Level</string>
+    <string name="description">Description</string>
+    <string name="create_metamagic">Create Meta Magic</string>
 </resources>

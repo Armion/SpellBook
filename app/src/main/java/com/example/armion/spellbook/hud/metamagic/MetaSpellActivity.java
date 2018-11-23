@@ -1,10 +1,12 @@
 package com.example.armion.spellbook.hud.metamagic;
 
 import android.content.Intent;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.JsonReader;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -17,16 +19,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.invoke.MethodHandle;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 
-public class MetaSpellActivity extends AppCompatActivity {
+public class MetaSpellActivity extends AppCompatActivity implements CreateMetamagicDialog.NoticeDialogListener{
 
 
     // a simple list for test waiting for the loading system for real metamagic spells
@@ -34,11 +38,12 @@ public class MetaSpellActivity extends AppCompatActivity {
 
     //list of the item selected to keep them in mind
     private List<Integer> metamagicSelected = new ArrayList<>();
+    private CreateMetamagicDialog createDialog = new CreateMetamagicDialog();
 
 
     private float x1,x2;
     static final int MIN_DISTANCE = 150;
-    private MetaListAdapter metaListAdapter = new MetaListAdapter(this, metamagicSelected, metamagicList);
+    private MetaListAdapter metaListAdapter ;
     private Button addButton;
     private Button deleteButton;
     private Button editButton;
@@ -49,11 +54,10 @@ public class MetaSpellActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        metamagicList = this.readJsonStream();
 
-        metamagicList.add(new Metamagic("empowered", 2, "increase the spell lvl by 2"));
-        metamagicList.add(new Metamagic("piercing", 1, "increase the DD by 2"));
-        metamagicList.add(new Metamagic("versatile", 1, "change one descriptor of the spell"));
-        metamagicList.add(new Metamagic("bended", 1, "bend the sharp of the spell"));
+        metaListAdapter = new MetaListAdapter(this, metamagicSelected, metamagicList);
+
 
 
 
@@ -85,7 +89,7 @@ public class MetaSpellActivity extends AppCompatActivity {
                 Collections.reverse(metamagicSelected);
 
                 for(Integer i : metamagicSelected){
-                    metaListAdapter.deleteItem(i);
+                 metamagicList =  metaListAdapter.deleteItem(i);
                 }
 
                 buttonClicked();
@@ -96,7 +100,7 @@ public class MetaSpellActivity extends AppCompatActivity {
        editButton.setOnClickListener(new View.OnClickListener(){
            @Override
            public void onClick(View v) {
-               metaListAdapter.editItem(metamagicSelected.get(0));
+            metamagicList =  metaListAdapter.editItem(metamagicSelected.get(0));
 
                buttonClicked();
 
@@ -106,14 +110,15 @@ public class MetaSpellActivity extends AppCompatActivity {
        addButton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               metaListAdapter.addItem();
 
+               createDialog.show(getSupportFragmentManager(), "createMetamagic");
                //not really need, but it's easier to update the viewer
                buttonClicked();
+
+
            }
+
        });
-
-
 
     }
 
@@ -134,8 +139,85 @@ public class MetaSpellActivity extends AppCompatActivity {
 
     }
 
-    public void saveMetamagic(){
 
+
+    public List<Metamagic> readJsonStream(){
+
+        FileInputStream in;
+
+
+
+        //we give the stream to the Json reader to parse him
+        JsonReader reader = null;
+        try {
+            in = openFileInput("metamagic.json");
+            reader = new JsonReader(new InputStreamReader(in, "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return readMetamagicsArray(reader);
+
+    }
+
+    public List<Metamagic> readMetamagicsArray(JsonReader reader){
+
+        List<Metamagic> metamagicList = new ArrayList<>();
+
+        try {
+            reader.beginArray();
+            while( reader.hasNext()){
+                metamagicList.add(readMetamagic(reader));
+            }
+            reader.endArray();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return  new ArrayList<>();
+        }
+
+        if(metamagicList != null){
+        }
+        return metamagicList;
+
+
+    }
+
+    public Metamagic readMetamagic(JsonReader reader ){
+
+
+        String metaName = new String();
+        int level = 0;
+        String description = new String();
+
+        try {
+            reader.beginObject();
+
+            while(reader.hasNext()){
+                String name = reader.nextName();
+                if(name.equals("name")){
+                    metaName = reader.nextString();
+                } else if (name.equals("level")){
+                    level = reader.nextInt();
+                }
+                else if (name.equals("description")){
+                    description = reader.nextString();
+                }
+                else{
+                    reader.skipValue();
+                }
+            }
+
+            reader.endObject();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        return new Metamagic(metaName, level, description);
 
     }
 
@@ -153,6 +235,7 @@ public class MetaSpellActivity extends AppCompatActivity {
 
                 if (Math.abs(deltaX) > MIN_DISTANCE && x2 > x1)
                 {
+                    metaListAdapter.saveMetamagic();
                     startActivity(new Intent(this, SpellBookActivity.class));
 
                 }
@@ -166,6 +249,18 @@ public class MetaSpellActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog, Metamagic metamagic) {
 
+        if(metamagic != null && dialog == createDialog){
+            metamagicList =  metaListAdapter.addItem(metamagic);
+        }
+
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+
+    }
 
 }
