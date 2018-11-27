@@ -38,6 +38,8 @@ public class MetaSpellActivity extends AppCompatActivity implements CreateMetama
 
     //list of the item selected to keep them in mind
     private List<Integer> metamagicSelected = new ArrayList<>();
+
+    private CreateMetamagicDialog editDialog = new CreateMetamagicDialog();
     private CreateMetamagicDialog createDialog = new CreateMetamagicDialog();
 
 
@@ -100,9 +102,18 @@ public class MetaSpellActivity extends AppCompatActivity implements CreateMetama
        editButton.setOnClickListener(new View.OnClickListener(){
            @Override
            public void onClick(View v) {
-            metamagicList =  metaListAdapter.editItem(metamagicSelected.get(0));
 
-               buttonClicked();
+               //getting the selected metamagic
+               Metamagic metamagic = metamagicList.get(metamagicSelected.get(0));
+
+               //passing the metamagic to the editDialog
+               Bundle bundle = new Bundle();
+               bundle.putString("name", metamagic.getName());
+               bundle.putString("level", metamagic.getLevel() + "");
+               bundle.putString("description", metamagic.getDescription());
+
+               editDialog.setArguments(bundle);
+               editDialog.show(getSupportFragmentManager(), "editMetamagic");
 
            }
        });
@@ -110,7 +121,6 @@ public class MetaSpellActivity extends AppCompatActivity implements CreateMetama
        addButton.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-
                createDialog.show(getSupportFragmentManager(), "createMetamagic");
                //not really need, but it's easier to update the viewer
                buttonClicked();
@@ -166,20 +176,22 @@ public class MetaSpellActivity extends AppCompatActivity implements CreateMetama
 
         List<Metamagic> metamagicList = new ArrayList<>();
 
-        try {
-            reader.beginArray();
-            while( reader.hasNext()){
-                metamagicList.add(readMetamagic(reader));
+        //security if the file doesn't exist
+        if(reader != null) {
+            try {
+                reader.beginArray();
+                while (reader.hasNext()) {
+                    metamagicList.add(readMetamagic(reader));
+                }
+                reader.endArray();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                return new ArrayList<>();
             }
-            reader.endArray();
 
-        } catch (IOException e) {
-            e.printStackTrace();
-            return  new ArrayList<>();
         }
 
-        if(metamagicList != null){
-        }
         return metamagicList;
 
 
@@ -252,9 +264,17 @@ public class MetaSpellActivity extends AppCompatActivity implements CreateMetama
     @Override
     public void onDialogPositiveClick(DialogFragment dialog, Metamagic metamagic) {
 
-        if(metamagic != null && dialog == createDialog){
-            metamagicList =  metaListAdapter.addItem(metamagic);
+        if(metamagic != null){
+            if(dialog == createDialog){
+                metamagicList =  metaListAdapter.addItem(metamagic);
+            }
+            if(dialog == editDialog){
+                metamagicList = metaListAdapter.editItem(metamagicSelected.get(0), metamagic);
+                buttonClicked();
+            }
+
         }
+
 
     }
 

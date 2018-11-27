@@ -95,11 +95,12 @@ public class MetaListAdapter extends RecyclerView.Adapter<MetaListAdapter.MyView
      * a method to edit an object from the list and update the adapter
      * @param index the index of the item to edit
      */
-    public List<Metamagic> editItem(int index){
+    public List<Metamagic> editItem(int index, Metamagic metamagic){
 
         //let's be safe
         if(index >= 0 && index < metamagicList.size()) {
-            this.metamagicList.set(index, new Metamagic("nom de meta magie au hasard", 99, "bravo le veau !"));
+            System.out.println(metamagic.getName());
+            this.metamagicList.set(index, metamagic);
             this.notifyItemChanged(index);
         }
 

@@ -15,17 +15,19 @@ import com.example.armion.spellbook.R;
 import com.example.armion.spellbook.spell.Metamagic;
 
 
+
 public class CreateMetamagicDialog extends DialogFragment {
 
 
 
+    //implementation of the listener interface
     public interface NoticeDialogListener {
         public void onDialogPositiveClick(DialogFragment dialog, Metamagic metamagic);
         public void onDialogNegativeClick(DialogFragment dialog);
     }
 
     NoticeDialogListener mListener;
-    EditText inputName ;
+
 
 
     // Override the Fragment.onAttach() method to instantiate the NoticeDialogListener
@@ -43,6 +45,8 @@ public class CreateMetamagicDialog extends DialogFragment {
         }
     }
 
+
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -50,11 +54,18 @@ public class CreateMetamagicDialog extends DialogFragment {
        final View view = li.inflate(R.layout.create_metamagic, null);
 
 
-
-
-
-
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+        //if this is called with args for the metamagic
+        try{
+            ((EditText)view.findViewById(R.id.inputName)).setText(getArguments().getString("name"));
+            ((EditText)view.findViewById(R.id.inputLevel)).setText(getArguments().getString("level"));
+            ((EditText)view.findViewById(R.id.inputDescription)).setText(getArguments().getString("description"));
+        }
+        catch (NullPointerException e){
+
+        }
+
 
 
         builder.setMessage(R.string.create_metamagic).setView(view);
@@ -63,14 +74,25 @@ public class CreateMetamagicDialog extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
+                int level = 1;
 
+                try{
+
+                    level = Integer.parseInt((( EditText)view.findViewById(R.id.inputLevel)).getText().toString());
+                }
+                catch (NumberFormatException e){
+                }
+                finally {
                     mListener.onDialogPositiveClick(CreateMetamagicDialog.this,
                             new Metamagic(
-                                        (( EditText)view.findViewById(R.id.inputName)).getText().toString(),
-                                        Integer.valueOf( (( EditText)view.findViewById(R.id.inputLevel)).getText().toString()),
-                                        (( EditText)view.findViewById(R.id.inputDescription)).getText().toString()
+                                    (( EditText)view.findViewById(R.id.inputName)).getText().toString(),
+                                    level,
+                                    (( EditText)view.findViewById(R.id.inputDescription)).getText().toString()
                             )
                     );
+                }
+
+
 
             }
         }).setNegativeButton("cancel", new DialogInterface.OnClickListener() {
