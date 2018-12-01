@@ -11,4 +11,6 @@
     <string name="level">Level</string>
     <string name="description">Description</string>
     <string name="create_metamagic">Create Meta Magic</string>
+    <string name="descriptors">Descriptors</string>
+    <string name="create_spell">Create Spell</string>
 </resources>

@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".hud.PreparedSpellsActivity" />
-        <activity android:name=".hud.SpellBookActivity" />
+        <activity android:name=".hud.spell.SpellBookActivity" />
         <activity android:name=".hud.metamagic.MetaSpellActivity" />
         <activity android:name=".hud.StatisticsActivity"></activity>
     </application>

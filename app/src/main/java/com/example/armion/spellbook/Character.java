@@ -5,9 +5,11 @@
 
 package com.example.armion.spellbook;
 
+import com.example.armion.spellbook.spell.Metamagic;
 import com.example.armion.spellbook.spell.PreparedSpell;
 import com.example.armion.spellbook.spell.Spell;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Character {
@@ -22,7 +24,39 @@ public class Character {
     private int level;
     private List<Spell> spellList;
     private  List<PreparedSpell> preparedSpellList ;
+    private List<Metamagic> metamagicList;
+    private String name;
 
+    public Character(int intelligence, int strength, int endurance, int wisdom, int constitution, int charisma, int hp, int level, List<Spell> spellList, List<PreparedSpell> preparedSpellList, List<Metamagic> metamagicList, String name) {
+        this.intelligence = intelligence;
+        this.strength = strength;
+        this.endurance = endurance;
+        this.wisdom = wisdom;
+        this.constitution = constitution;
+        this.charisma = charisma;
+        this.hp = hp;
+        this.level = level;
+        this.spellList = spellList;
+        this.preparedSpellList = preparedSpellList;
+        this.metamagicList = metamagicList;
+        this.name = name;
+    }
+
+    public Character(){
+        this.intelligence = 0;
+        this.strength = 0;
+        this.endurance = 0;
+        this.wisdom = 0;
+        this.constitution = 0;
+        this.charisma = 0;
+        this.level = 0;
+        this.hp = 0;
+        this.spellList = new ArrayList<>();
+        this.preparedSpellList = new ArrayList<>();
+        this.metamagicList = new ArrayList<>();
+        this.name = "";
+
+    }
 
     public int getHp() {
         return hp;
@@ -104,5 +138,19 @@ public class Character {
         this.charisma = charisma;
     }
 
+    public List<Metamagic> getMetamagicList() {
+        return metamagicList;
+    }
 
+    public void setMetamagicList(List<Metamagic> metamagicList) {
+        this.metamagicList = metamagicList;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

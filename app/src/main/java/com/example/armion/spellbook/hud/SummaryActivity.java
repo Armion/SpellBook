@@ -12,6 +12,13 @@ import android.view.MotionEvent;
 import android.widget.Toast;
 
 import com.example.armion.spellbook.R;
+import com.example.armion.spellbook.spell.School;
+
+
+import java.util.Arrays;
+
+import java.util.List;
+
 
 public class SummaryActivity extends AppCompatActivity {
 
@@ -19,6 +26,9 @@ public class SummaryActivity extends AppCompatActivity {
 
     private float x1,x2;
     static final int MIN_DISTANCE = 150;
+    List<School> list = Arrays.asList(School.values());
+
+
 
 
     @Override

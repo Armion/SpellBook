@@ -1,4 +1,4 @@
-package com.example.armion.spellbook.hud.metamagic;
+package com.example.armion.spellbook.hud.spell;
 
 import android.content.Intent;
 import android.support.v4.app.DialogFragment;
@@ -6,42 +6,40 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.JsonReader;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
 
 import com.example.armion.spellbook.FileStream;
 import com.example.armion.spellbook.R;
-import com.example.armion.spellbook.hud.spell.SpellBookActivity;
-import com.example.armion.spellbook.spell.Metamagic;
+import com.example.armion.spellbook.hud.PreparedSpellsActivity;
+import com.example.armion.spellbook.hud.metamagic.CreateMetamagicDialog;
+import com.example.armion.spellbook.hud.metamagic.MetaSpellActivity;
+import com.example.armion.spellbook.spell.Spell;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
-public class MetaSpellActivity extends AppCompatActivity implements CreateMetamagicDialog.NoticeDialogListener{
+public class SpellBookActivity extends AppCompatActivity implements CreateSpellDialog.NoticeDialogListener{
 
 
     // a simple list for test waiting for the loading system for real metamagic spells
-    private List<Metamagic> metamagicList = new ArrayList<>();
+    private List<Spell> spellList = new ArrayList<>();
 
     //list of the item selected to keep them in mind
     private List<Integer> metamagicSelected = new ArrayList<>();
 
     private CreateMetamagicDialog editDialog = new CreateMetamagicDialog();
-    private CreateMetamagicDialog createDialog = new CreateMetamagicDialog();
+    private CreateSpellDialog createDialog = new CreateSpellDialog();
 
 
     private float x1,x2;
     static final int MIN_DISTANCE = 150;
-    private MetaListAdapter metaListAdapter ;
+    private SpellListAdapter spellListAdapter;
     private Button addButton;
     private Button deleteButton;
     private Button editButton;
@@ -52,16 +50,16 @@ public class MetaSpellActivity extends AppCompatActivity implements CreateMetama
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        metamagicList = FileStream.getCharacter("Elyndil", this.getBaseContext()).getMetamagicList();
+        spellList = FileStream.getCharacter("noname", this.getBaseContext()).getSpellList();
 
-        metaListAdapter = new MetaListAdapter(this, metamagicSelected, metamagicList);
+        spellListAdapter = new SpellListAdapter(this, metamagicSelected, spellList);
 
 
 
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meta_spell);
-        setTitle(R.string.meta_spell_name);
+        setTitle(R.string.spell_book_name);
 
         addButton = findViewById(R.id.buttonCreate);
         deleteButton = findViewById(R.id.buttonDelete);
@@ -74,11 +72,11 @@ public class MetaSpellActivity extends AppCompatActivity implements CreateMetama
 
 
         metaMagicRecycler.setLayoutManager(new LinearLayoutManager(this));
-        metaMagicRecycler.setAdapter(metaListAdapter);
+        metaMagicRecycler.setAdapter(spellListAdapter);
 
 
         //let's take care of the buttons !
-       deleteButton.setOnClickListener(new View.OnClickListener() {
+        deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -87,7 +85,7 @@ public class MetaSpellActivity extends AppCompatActivity implements CreateMetama
                 Collections.reverse(metamagicSelected);
 
                 for(Integer i : metamagicSelected){
-                 metamagicList =  metaListAdapter.deleteItem(i);
+                    spellList =  spellListAdapter.deleteItem(i);
                 }
 
                 buttonClicked();
@@ -95,36 +93,36 @@ public class MetaSpellActivity extends AppCompatActivity implements CreateMetama
             }
         });
 
-       editButton.setOnClickListener(new View.OnClickListener(){
-           @Override
-           public void onClick(View v) {
+        editButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
 
-               //getting the selected metamagic
-               Metamagic metamagic = metamagicList.get(metamagicSelected.get(0));
+                //getting the selected spell
+                Spell spell = spellList.get(metamagicSelected.get(0));
 
-               //passing the metamagic to the editDialog
-               Bundle bundle = new Bundle();
-               bundle.putString("name", metamagic.getName());
-               bundle.putString("level", metamagic.getLevel() + "");
-               bundle.putString("description", metamagic.getDescription());
+                //passing the spell to the editDialog
+                Bundle bundle = new Bundle();
+                bundle.putString("name", spell.getName());
+                bundle.putString("level", spell.getLevel() + "");
+                bundle.putString("description", spell.getDescription());
 
-               editDialog.setArguments(bundle);
-               editDialog.show(getSupportFragmentManager(), "editMetamagic");
+                editDialog.setArguments(bundle);
+                editDialog.show(getSupportFragmentManager(), "editSpells");
 
-           }
-       });
+            }
+        });
 
-       addButton.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               createDialog.show(getSupportFragmentManager(), "createMetamagic");
-               //not really need, but it's easier to update the viewer
-               buttonClicked();
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createDialog.show(getSupportFragmentManager(), "createSpells");
+                //not really need, but it's easier to update the viewer
+                buttonClicked();
 
 
-           }
+            }
 
-       });
+        });
 
     }
 
@@ -146,6 +144,7 @@ public class MetaSpellActivity extends AppCompatActivity implements CreateMetama
     }
 
 
+
     @Override
     public boolean onTouchEvent(MotionEvent event)
     {
@@ -158,10 +157,21 @@ public class MetaSpellActivity extends AppCompatActivity implements CreateMetama
                 x2 = event.getX();
                 float deltaX = x2 - x1;
 
-                if (Math.abs(deltaX) > MIN_DISTANCE && x2 > x1)
+                if (Math.abs(deltaX) > MIN_DISTANCE)
                 {
-                    metaListAdapter.saveMetamagic();
-                    startActivity(new Intent(this, SpellBookActivity.class));
+                    // Left to Right swipe action
+                    if (x2 > x1) {
+                        Toast.makeText(this, "Left to Right swipe", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(this, PreparedSpellsActivity.class));
+                    }
+
+                    // Right to left swipe action
+                    else
+                    {
+                        Toast.makeText(this, "Right to Left swipe", Toast.LENGTH_SHORT).show ();
+                        startActivity(new Intent(this, MetaSpellActivity.class));
+
+                    }
 
                 }
                 else
@@ -175,14 +185,14 @@ public class MetaSpellActivity extends AppCompatActivity implements CreateMetama
 
 
     @Override
-    public void onDialogPositiveClick(DialogFragment dialog, Metamagic metamagic) {
+    public void onDialogPositiveClick(DialogFragment dialog, Spell metamagic) {
 
         if(metamagic != null){
             if(dialog == createDialog){
-                metamagicList =  metaListAdapter.addItem(metamagic);
+                spellList =  spellListAdapter.addItem(metamagic);
             }
             if(dialog == editDialog){
-                metamagicList = metaListAdapter.editItem(metamagicSelected.get(0), metamagic);
+                spellList = spellListAdapter.editItem(metamagicSelected.get(0), metamagic);
                 buttonClicked();
             }
 
@@ -195,5 +205,4 @@ public class MetaSpellActivity extends AppCompatActivity implements CreateMetama
     public void onDialogNegativeClick(DialogFragment dialog) {
 
     }
-
 }
