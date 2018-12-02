@@ -23,11 +23,11 @@ public class Character {
     private int hp;
     private int level;
     private List<Spell> spellList;
-    private  List<PreparedSpell> preparedSpellList ;
     private List<Metamagic> metamagicList;
     private String name;
+    private List<SpellSlot> spellSlotList;
 
-    public Character(int intelligence, int strength, int endurance, int wisdom, int constitution, int charisma, int hp, int level, List<Spell> spellList, List<PreparedSpell> preparedSpellList, List<Metamagic> metamagicList, String name) {
+    public Character(int intelligence, int strength, int endurance, int wisdom, int constitution, int charisma, int hp, int level, List<Spell> spellList, List<Metamagic> metamagicList, String name, List<SpellSlot> spellSlotList) {
         this.intelligence = intelligence;
         this.strength = strength;
         this.endurance = endurance;
@@ -37,9 +37,9 @@ public class Character {
         this.hp = hp;
         this.level = level;
         this.spellList = spellList;
-        this.preparedSpellList = preparedSpellList;
         this.metamagicList = metamagicList;
         this.name = name;
+        this.spellSlotList = spellSlotList;
     }
 
     public Character(){
@@ -52,7 +52,7 @@ public class Character {
         this.level = 0;
         this.hp = 0;
         this.spellList = new ArrayList<>();
-        this.preparedSpellList = new ArrayList<>();
+        this.spellSlotList = new ArrayList<>();
         this.metamagicList = new ArrayList<>();
         this.name = "";
 
@@ -80,14 +80,6 @@ public class Character {
 
     public void setSpellList(List<Spell> spellList) {
         this.spellList = spellList;
-    }
-
-    public List<PreparedSpell> getPreparedSpellList() {
-        return preparedSpellList;
-    }
-
-    public void setPreparedSpellList(List<PreparedSpell> preparedSpellList) {
-        this.preparedSpellList = preparedSpellList;
     }
 
     public int getIntelligence() {
@@ -152,5 +144,13 @@ public class Character {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<SpellSlot> getSpellSlotList() {
+        return spellSlotList;
+    }
+
+    public void setSpellSlotList(List<SpellSlot> spellSlotList) {
+        this.spellSlotList = spellSlotList;
     }
 }

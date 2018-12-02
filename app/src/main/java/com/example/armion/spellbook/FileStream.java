@@ -42,6 +42,26 @@ public abstract class FileStream {
 
     }
 
+    public static void saveSpellSlot(List<SpellSlot> spellList, Context context, String name){
+
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        Character character = FileStream.getCharacter(name, context);
+
+        character.setSpellSlotList(spellList);
+
+        FileOutputStream output = null;
+
+
+        try {
+            output = context.openFileOutput(name + ".json", MODE_PRIVATE);
+            output.write(gson.toJson(character).toString().getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
     public static void saveMetamagic(List<Metamagic> metamagicList, Context context, String name){
 
 

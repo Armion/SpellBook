@@ -9,6 +9,12 @@ public class PreparedSpell {
     Spell spell;
     List<Metamagic> metamagicList = new ArrayList<>();
 
+
+    public PreparedSpell(Spell spell, List<Metamagic> metamagicList) {
+        this.spell = spell;
+        this.metamagicList = metamagicList;
+    }
+
     public Spell getSpell() {
         return spell;
     }

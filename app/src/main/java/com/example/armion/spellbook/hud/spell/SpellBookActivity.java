@@ -26,7 +26,7 @@ import java.util.List;
 public class SpellBookActivity extends AppCompatActivity implements CreateSpellDialog.NoticeDialogListener{
 
 
-    // a simple list for test waiting for the loading system for real metamagic spells
+    // a simple list for descriptorMultiSpinnerList waiting for the loading system for real metamagic spells
     private List<Spell> spellList = new ArrayList<>();
 
     //list of the item selected to keep them in mind

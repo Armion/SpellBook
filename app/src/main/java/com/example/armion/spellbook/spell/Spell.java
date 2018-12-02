@@ -24,6 +24,7 @@ public class Spell {
     String name;
     int level;
 
+    public Spell(){}
     public Spell(School school, String range, List<Descriptor> descriptorList, Dice dice, String castingTime, String area, String duration, String description, String name, int level) {
         this.school = school;
         this.range = range;
@@ -116,4 +117,10 @@ public class Spell {
     public void setLevel(int level) {
         this.level = level;
     }
+
+    @Override
+    public String toString(){
+        return this.name;
+    }
+
 }

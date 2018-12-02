@@ -13,25 +13,24 @@ import android.widget.Toast;
 
 import com.example.armion.spellbook.FileStream;
 import com.example.armion.spellbook.R;
+import com.example.armion.spellbook.SpellSlot;
 import com.example.armion.spellbook.hud.SummaryActivity;
-import com.example.armion.spellbook.hud.spell.CreateSpellDialog;
 import com.example.armion.spellbook.hud.spell.SpellBookActivity;
-import com.example.armion.spellbook.spell.Spell;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class PreparedSpellsActivity extends AppCompatActivity implements CreateSpellDialog.NoticeDialogListener {
+public class PreparedSpellsActivity extends AppCompatActivity implements CreateSlotDialog.NoticeDialogListener {
 
     // a simple list for test waiting for the loading system for real metamagic spells
-    private List<Spell> spellList = new ArrayList<>();
+    private List<SpellSlot> spellSlotList = new ArrayList<>();
 
     //list of the item selected to keep them in mind
     private List<Integer> spellSelected = new ArrayList<>();
 
-    private CreateSpellDialog editDialog = new CreateSpellDialog();
-    private CreateSpellDialog createDialog = new CreateSpellDialog();
+    private CreateSlotDialog editDialog = new CreateSlotDialog();
+    private CreateSlotDialog createDialog = new CreateSlotDialog();
 
 
     private float x1,x2;
@@ -47,9 +46,9 @@ public class PreparedSpellsActivity extends AppCompatActivity implements CreateS
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        spellList = FileStream.getCharacter("noname", this.getBaseContext()).getSpellList();
+       spellSlotList = FileStream.getCharacter("Elyndil", this.getBaseContext()).getSpellSlotList();
 
-        spellListAdapter = new SlotListAdapter(this, spellSelected, spellList);
+        spellListAdapter = new SlotListAdapter(this, spellSelected, spellSlotList);
 
 
 
@@ -82,7 +81,7 @@ public class PreparedSpellsActivity extends AppCompatActivity implements CreateS
                 Collections.reverse(spellSelected);
 
                 for(Integer i : spellSelected){
-                    spellList =  spellListAdapter.deleteItem(i);
+                    spellSlotList =  spellListAdapter.deleteItem(i);
                 }
 
                 buttonClicked();
@@ -94,14 +93,12 @@ public class PreparedSpellsActivity extends AppCompatActivity implements CreateS
             @Override
             public void onClick(View v) {
 
-                //getting the selected spell
-                Spell spell = spellList.get(spellSelected.get(0));
+                //getting the selected spellSlot
+                SpellSlot spellSlot = spellSlotList.get(spellSelected.get(0));
 
-                //passing the spell to the editDialog
+                //passing the spellSlot to the editDialog
                 Bundle bundle = new Bundle();
-                bundle.putString("name", spell.getName());
-                bundle.putString("level", spell.getLevel() + "");
-                bundle.putString("description", spell.getDescription());
+                bundle.putString("level", spellSlot.getLevel() + "");
 
                 editDialog.setArguments(bundle);
                 editDialog.show(getSupportFragmentManager(), "editSpells");
@@ -154,6 +151,7 @@ public class PreparedSpellsActivity extends AppCompatActivity implements CreateS
                     // Left to Right swipe action
                     if (x2 > x1) {
                         Toast.makeText(this, "Left to Right swipe", Toast.LENGTH_SHORT).show();
+                        spellListAdapter.saveSpellSlot();
                         startActivity(new Intent(this, SummaryActivity.class));
                     }
 
@@ -161,6 +159,7 @@ public class PreparedSpellsActivity extends AppCompatActivity implements CreateS
                     else
                     {
                         Toast.makeText(this, "Right to Left swipe", Toast.LENGTH_SHORT).show ();
+                        spellListAdapter.saveSpellSlot();
                         startActivity(new Intent(this, SpellBookActivity.class));
 
                     }
@@ -176,14 +175,16 @@ public class PreparedSpellsActivity extends AppCompatActivity implements CreateS
     }
 
     @Override
-    public void onDialogPositiveClick(DialogFragment dialog, Spell spell) {
+    public void onDialogPositiveClick(DialogFragment dialog, SpellSlot slot) {
 
-        if(spell != null){
+        if(slot != null){
             if(dialog == createDialog){
-                spellList =  spellListAdapter.addItem(spell);
+
+                spellSlotList = spellListAdapter.addItem(slot);
+
             }
             if(dialog == editDialog){
-                spellList = spellListAdapter.editItem(spellSelected.get(0), spell);
+
                 buttonClicked();
             }
 

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/spellText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/spell" />
+
+        <Spinner
+            android:id="@+id/spellSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/metaText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/meta_spell_name" />
+
+        <com.androidbuts.multispinnerfilter.MultiSpinner
+            android:id="@+id/metaSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/levelText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/level" />
+
+        <EditText
+            android:id="@+id/inputLevel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="1"
+            android:inputType="number" />
+
+    </LinearLayout>
+
+</LinearLayout>

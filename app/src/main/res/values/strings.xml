@@ -20,4 +20,7 @@
     <string name="duration">Duration</string>
     <string name="casting_time">Casting Time</string>
     <string name="ice">Ice</string>
+    <string name="used">Used</string>
+    <string name="avalable">Avalable</string>
+    <string name="spell">Spell</string>
 </resources>

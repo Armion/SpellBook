@@ -21,4 +21,7 @@
     <string name="duration">Durée</string>
     <string name="casting_time">Temps d\'incantation</string>
     <string name="ice">Glace</string>
+    <string name="used">Utilisé</string>
+    <string name="avalable">Disponible</string>
+    <string name="spell">Sort</string>
 </resources>

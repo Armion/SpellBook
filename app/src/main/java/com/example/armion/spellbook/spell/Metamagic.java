@@ -47,4 +47,9 @@ public class Metamagic {
                 name.equals(metamagic.name) &&
                 description.equals(metamagic.description);
     }
+
+    @Override
+    public String toString(){
+        return this.name;
+    }
 }

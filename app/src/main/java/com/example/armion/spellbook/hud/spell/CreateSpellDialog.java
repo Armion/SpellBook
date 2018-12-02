@@ -8,14 +8,14 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
 
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
+
 
 
 import com.androidbuts.multispinnerfilter.MultiSpinner;
@@ -37,8 +37,8 @@ public class CreateSpellDialog extends DialogFragment implements AdapterView.OnI
 
 
     private ArrayAdapter<School> schoolArrayAdapter;
-    private ArrayAdapter<Descriptor> descriptorArrayAdapter;
     private ArrayAdapter<Dice> diceArrayAdapter;
+    LinkedHashMap<String, Boolean> descriptorMultiSpinnerList = new LinkedHashMap<>();
 
     private Spinner schoolSpinner;
     private MultiSpinner descriptorSpinner;
@@ -47,7 +47,6 @@ public class CreateSpellDialog extends DialogFragment implements AdapterView.OnI
     private School schoolselected = School.abjuration;
     private List<Descriptor> descriptorsSelected = new ArrayList<>();
     private  Dice diceSelected = Dice.d4;
-
     private List<Descriptor> descriptorList;
 
     @Override
@@ -139,14 +138,14 @@ public class CreateSpellDialog extends DialogFragment implements AdapterView.OnI
 
         descriptorList = Arrays.asList(Descriptor.values());
 
-         LinkedHashMap<String, Boolean> test = new LinkedHashMap<>();
+
 
          for(Descriptor d : descriptorList){
-             test.put(d.toString(), false);
+             descriptorMultiSpinnerList.put(d.toString(), false);
          }
 
 
-        descriptorSpinner.setItems(test, new MultiSpinnerListener() {
+        descriptorSpinner.setItems(descriptorMultiSpinnerList, new MultiSpinnerListener() {
 
             @Override
             public void onItemsSelected(boolean[] selected) {

@@ -8,6 +8,13 @@ public class SpellSlot {
     private int level;
     private boolean used;
 
+
+    public SpellSlot(PreparedSpell preparedSpell, int level) {
+        this.preparedSpell = preparedSpell;
+        this.level = level;
+        this.used = false;
+    }
+
     public PreparedSpell getPreparedSpell() {
         return preparedSpell;
     }

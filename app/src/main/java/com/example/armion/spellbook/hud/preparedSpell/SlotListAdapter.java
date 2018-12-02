@@ -1,39 +1,45 @@
 package com.example.armion.spellbook.hud.preparedSpell;
 
+import android.content.Context;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.example.armion.spellbook.FileStream;
 import com.example.armion.spellbook.R;
-import com.example.armion.spellbook.spell.Spell;
+import com.example.armion.spellbook.SpellSlot;
 
 import java.util.List;
 
 public class SlotListAdapter  extends RecyclerView.Adapter<SlotListAdapter.MyViewHolder>{
+
+
     private List<Integer> selectedList;
-    private List<Spell> spellList;
+    private List<SpellSlot> spellSlotList ;
 
 
     private final AppCompatActivity parent;
 
 
-    SlotListAdapter(AppCompatActivity parent, List<Integer> selectedList, List<Spell> metamagicList){
+    SlotListAdapter(AppCompatActivity parent, List<Integer> selectedList, List<SpellSlot> spellSlotList){
         super();
 
         this.parent = parent;
         this.selectedList = selectedList;
-        this.spellList = metamagicList;
+        this.spellSlotList = spellSlotList;
     }
 
 
 
     @Override
     public int getItemCount(){
-        return spellList.size();
+        return spellSlotList.size();
     }
 
     @Override
@@ -41,7 +47,7 @@ public class SlotListAdapter  extends RecyclerView.Adapter<SlotListAdapter.MyVie
 
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
-        View view = inflater.inflate(R.layout.spell_list, parent, false);
+        View view = inflater.inflate(R.layout.slot_list, parent, false);
 
         return new MyViewHolder(view);
 
@@ -54,8 +60,8 @@ public class SlotListAdapter  extends RecyclerView.Adapter<SlotListAdapter.MyVie
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position){
 
-        Spell spell = spellList.get(position);
-        holder.display(spell);
+        SpellSlot spellSlot = spellSlotList.get(position);
+        holder.display(spellSlot);
 
     }
 
@@ -63,17 +69,17 @@ public class SlotListAdapter  extends RecyclerView.Adapter<SlotListAdapter.MyVie
      * a method tu delete an item from the list and update the adapter
      * @param index the index of the item to edit
      */
-    public List<Spell> deleteItem(int index){
+    public List<SpellSlot> deleteItem(int index){
 
         //let's be safe !
-        if(index >= 0 && index < spellList.size())
+        if(index >= 0 && index < spellSlotList.size())
         {
-            this.spellList.remove(index);
+            this.spellSlotList.remove(index);
             this.notifyItemRemoved(index);
-            this.notifyItemRangeChanged(0, spellList.size());
+            this.notifyItemRangeChanged(0, spellSlotList.size());
         }
 
-        return spellList;
+        return spellSlotList;
 
     }
 
@@ -81,30 +87,30 @@ public class SlotListAdapter  extends RecyclerView.Adapter<SlotListAdapter.MyVie
      * a method to edit an object from the list and update the adapter
      * @param index the index of the item to edit
      */
-    public List<Spell> editItem(int index, Spell spell){
+    public List<SpellSlot> editItem(int index, SpellSlot spellSlot){
 
         //let's be safe
-        if(index >= 0 && index < spellList.size()) {
-            this.spellList.set(index, spell);
+        if(index >= 0 && index < spellSlotList.size()) {
+            this.spellSlotList.set(index, spellSlot);
             this.notifyItemChanged(index);
         }
 
-        return spellList;
+        return spellSlotList;
     }
 
 
-    public List<Spell> addItem(Spell spell){
+    public List<SpellSlot> addItem(SpellSlot spellSlot){
 
-        this.spellList.add(spell);
+        this.spellSlotList.add(spellSlot);
         this.notifyDataSetChanged();
 
-        return spellList;
+        return spellSlotList;
 
     }
 
-    public void saveSpell(){
+    public void saveSpellSlot(){
 
-        FileStream.saveSpell(spellList, parent.getBaseContext(), "Elyndil");
+        FileStream.saveSpellSlot(spellSlotList, parent.getBaseContext(), "Elyndil");
 
     }
 
@@ -112,18 +118,15 @@ public class SlotListAdapter  extends RecyclerView.Adapter<SlotListAdapter.MyVie
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView name;
-        private final TextView description;
-        private final TextView level;
-        private final TextView school;
-        private final TextView descriptors;
-        private final TextView range;
-        private final TextView area;
-        private final TextView duration;
-        private final TextView castingTime;
+        private final TextView spellName;
+        private final TextView metamagicList;
+        private final TextView slotLevel;
+        private final TextView spellLevel;
+        private final Switch used;
 
 
-        private Spell currentSpell;
+
+        private SpellSlot currentSpellSlot;
 
         /**
          * create the view holder and binding his field to the variables
@@ -133,21 +136,29 @@ public class SlotListAdapter  extends RecyclerView.Adapter<SlotListAdapter.MyVie
 
             super(itemView);
 
-            //the field for the view
-            name = itemView.findViewById(R.id.spellName);
-            description =  itemView.findViewById(R.id.spellDescription);
-            level =  itemView.findViewById(R.id.spellLevel);
-            school = itemView.findViewById(R.id.schoolText);
-            descriptors = itemView.findViewById(R.id.descriptorsText);
-            range = itemView.findViewById(R.id.rangeText);
-            area = itemView.findViewById(R.id.areaText);
-            duration = itemView.findViewById(R.id.durationText);
-            castingTime = itemView.findViewById(R.id.castingText);
+            //the fields for the view
+             spellName = itemView.findViewById(R.id.spellName);
+             metamagicList = itemView.findViewById(R.id.metamagicList);
+             slotLevel = itemView.findViewById(R.id.slotLevel);
+             spellLevel = itemView.findViewById(R.id.spellLevel);
+             used = itemView.findViewById(R.id.usedSwitch);
 
 
 
 
 
+             used.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                 @Override
+                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                     if(isChecked){
+                         ((View) buttonView.getParent()).setBackgroundColor(Color.RED);
+                     }
+                     else{
+                         ((View) buttonView.getParent()).setBackgroundColor(Color.WHITE);
+                     }
+
+                 }
+             });
 
 
 
@@ -194,23 +205,18 @@ public class SlotListAdapter  extends RecyclerView.Adapter<SlotListAdapter.MyVie
 
         /**
          * binding our class to the view
-         * @param spell the metamagic to display
+         * @param spellSlot the metamagic to display
          */
-        public void display(Spell spell) {
+        public void display(SpellSlot spellSlot) {
 
 
             //we actualize the selected metamagic
-            currentSpell = spell;
+            currentSpellSlot = spellSlot;
 
-            name.setText(spell.getName());
-            level.setText(Integer.toString(spell.getLevel()));
-            description.setText(spell.getDescription());
-            school.setText(spell.getSchool().toString());
-            descriptors.setText(spell.getDescriptorList().toString());
-            range.setText(spell.getRange());
-            area.setText(spell.getArea());
-            duration.setText(spell.getDuration());
-            castingTime.setText(spell.getCastingTime());
+            spellName.setText(spellSlot.getPreparedSpell().getSpell().getName());
+            metamagicList.setText(spellSlot.getPreparedSpell().getMetamagicList().toString());
+            slotLevel.setText(spellSlot.getLevel() + "");
+            spellLevel.setText(spellSlot.getPreparedSpell().getLevel() + "");
 
         }
     }
