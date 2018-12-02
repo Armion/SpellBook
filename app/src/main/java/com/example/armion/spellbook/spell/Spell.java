@@ -14,8 +14,8 @@ import java.util.List;
 public class Spell {
 
     School school;
-    float range;
-    List<Descriptor> descriptorList = new ArrayList<Descriptor>();
+    String range;
+    List<Descriptor> descriptorList = new ArrayList<>();
     Dice dice;
     String castingTime;
     String area;
@@ -23,6 +23,19 @@ public class Spell {
     String description;
     String name;
     int level;
+
+    public Spell(School school, String range, List<Descriptor> descriptorList, Dice dice, String castingTime, String area, String duration, String description, String name, int level) {
+        this.school = school;
+        this.range = range;
+        this.descriptorList = descriptorList;
+        this.dice = dice;
+        this.castingTime = castingTime;
+        this.area = area;
+        this.duration = duration;
+        this.description = description;
+        this.name = name;
+        this.level = level;
+    }
 
     public School getSchool() {
         return school;
@@ -32,11 +45,11 @@ public class Spell {
         this.school = school;
     }
 
-    public float getRange() {
+    public String getRange() {
         return range;
     }
 
-    public void setRange(float range) {
+    public void setRange(String range) {
         this.range = range;
     }
 

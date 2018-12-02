@@ -31,9 +31,9 @@ public class SpellBookActivity extends AppCompatActivity implements CreateSpellD
     private List<Spell> spellList = new ArrayList<>();
 
     //list of the item selected to keep them in mind
-    private List<Integer> metamagicSelected = new ArrayList<>();
+    private List<Integer> spellSelected = new ArrayList<>();
 
-    private CreateMetamagicDialog editDialog = new CreateMetamagicDialog();
+    private CreateSpellDialog editDialog = new CreateSpellDialog();
     private CreateSpellDialog createDialog = new CreateSpellDialog();
 
 
@@ -50,9 +50,9 @@ public class SpellBookActivity extends AppCompatActivity implements CreateSpellD
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        spellList = FileStream.getCharacter("noname", this.getBaseContext()).getSpellList();
+        spellList = FileStream.getCharacter("Elyndil", this.getBaseContext()).getSpellList();
 
-        spellListAdapter = new SpellListAdapter(this, metamagicSelected, spellList);
+        spellListAdapter = new SpellListAdapter(this, spellSelected, spellList);
 
 
 
@@ -81,10 +81,10 @@ public class SpellBookActivity extends AppCompatActivity implements CreateSpellD
             public void onClick(View v) {
 
                 //to avoid to delete an item after the indice of on already deleted item
-                Collections.sort(metamagicSelected);
-                Collections.reverse(metamagicSelected);
+                Collections.sort(spellSelected);
+                Collections.reverse(spellSelected);
 
-                for(Integer i : metamagicSelected){
+                for(Integer i : spellSelected){
                     spellList =  spellListAdapter.deleteItem(i);
                 }
 
@@ -98,7 +98,7 @@ public class SpellBookActivity extends AppCompatActivity implements CreateSpellD
             public void onClick(View v) {
 
                 //getting the selected spell
-                Spell spell = spellList.get(metamagicSelected.get(0));
+                Spell spell = spellList.get(spellSelected.get(0));
 
                 //passing the spell to the editDialog
                 Bundle bundle = new Bundle();
@@ -136,7 +136,7 @@ public class SpellBookActivity extends AppCompatActivity implements CreateSpellD
         }
 
 
-        metamagicSelected.clear();
+        spellSelected.clear();
         deleteButton.setEnabled(false);
         editButton.setEnabled(false);
 
@@ -162,6 +162,7 @@ public class SpellBookActivity extends AppCompatActivity implements CreateSpellD
                     // Left to Right swipe action
                     if (x2 > x1) {
                         Toast.makeText(this, "Left to Right swipe", Toast.LENGTH_SHORT).show();
+                        spellListAdapter.saveSpell();
                         startActivity(new Intent(this, PreparedSpellsActivity.class));
                     }
 
@@ -169,6 +170,7 @@ public class SpellBookActivity extends AppCompatActivity implements CreateSpellD
                     else
                     {
                         Toast.makeText(this, "Right to Left swipe", Toast.LENGTH_SHORT).show ();
+                        spellListAdapter.saveSpell();
                         startActivity(new Intent(this, MetaSpellActivity.class));
 
                     }
@@ -185,14 +187,14 @@ public class SpellBookActivity extends AppCompatActivity implements CreateSpellD
 
 
     @Override
-    public void onDialogPositiveClick(DialogFragment dialog, Spell metamagic) {
+    public void onDialogPositiveClick(DialogFragment dialog, Spell spell) {
 
-        if(metamagic != null){
+        if(spell != null){
             if(dialog == createDialog){
-                spellList =  spellListAdapter.addItem(metamagic);
+                spellList =  spellListAdapter.addItem(spell);
             }
             if(dialog == editDialog){
-                spellList = spellListAdapter.editItem(metamagicSelected.get(0), metamagic);
+                spellList = spellListAdapter.editItem(spellSelected.get(0), spell);
                 buttonClicked();
             }
 

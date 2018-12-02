@@ -100,7 +100,6 @@ public class MetaListAdapter extends RecyclerView.Adapter<MetaListAdapter.MyView
 
         //let's be safe
         if(index >= 0 && index < metamagicList.size()) {
-            System.out.println(metamagic.getName());
             this.metamagicList.set(index, metamagic);
             this.notifyItemChanged(index);
         }

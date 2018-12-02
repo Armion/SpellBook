@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:id="@+id/linearLayout"
+        android:layout_width="414dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="5dp"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <EditText
             android:id="@+id/inputName"
@@ -26,21 +29,45 @@
             android:id="@+id/schoolText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="@string/school" />
+
+        <Spinner
+            android:id="@+id/schoolSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/descriptorText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/descriptors" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/schoolRecyclerView"
+        <Spinner
+            android:id="@+id/descriptorsSpinner"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/diceText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/dice" />
+
+        <Spinner
+            android:id="@+id/diceSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:baselineAligned="false" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/level"
+            android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/labelLevel"
-                android:layout_width="match_parent"
+                android:id="@+id/levelText"
+                android:layout_width="173dp"
                 android:layout_height="50dp"
                 android:text="@string/level"
                 tools:layout_editor_absoluteX="32dp"
@@ -48,7 +75,7 @@
 
             <EditText
                 android:id="@+id/inputLevel"
-                android:layout_width="match_parent"
+                android:layout_width="141dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
@@ -58,10 +85,93 @@
                 android:hint="1"
                 android:inputType="number"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/labelLevel"
+                app:layout_constraintStart_toEndOf="@+id/labelRange"
                 tools:layout_editor_absoluteY="66dp" />
 
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/range"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/rangeText"
+                android:layout_width="109dp"
+                android:layout_height="50dp"
+                android:text="@string/range"
+                tools:layout_editor_absoluteX="32dp"
+                tools:layout_editor_absoluteY="66dp" />
+
+            <EditText
+                android:id="@+id/inputRange"
+                android:layout_width="84dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:ems="10"
+                android:hint="1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/labelRange"
+                tools:layout_editor_absoluteY="66dp" />
+
+            <TextView
+                android:id="@+id/areaText"
+                android:layout_width="28dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/area"
+                tools:layout_editor_absoluteX="32dp"
+                tools:layout_editor_absoluteY="66dp" />
+
+            <EditText
+                android:id="@+id/inputArea"
+                android:layout_width="25dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="1" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/casting"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/castingText"
+                android:layout_width="88dp"
+                android:layout_height="35dp"
+                android:layout_weight="1"
+                android:text="@string/casting_time" />
+
+            <EditText
+                android:id="@+id/inputCasting"
+                android:layout_width="54dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10" />
+
+            <TextView
+                android:id="@+id/durationText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/duration" />
+
+            <EditText
+                android:id="@+id/inputDuration"
+                android:layout_width="90dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10" />
         </LinearLayout>
 
         <EditText
@@ -73,5 +183,6 @@
             android:text="@string/description" />
 
     </LinearLayout>
+
 
 </android.support.constraint.ConstraintLayout>

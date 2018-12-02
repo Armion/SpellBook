@@ -13,4 +13,10 @@
     <string name="create_metamagic">Create Meta Magic</string>
     <string name="descriptors">Descriptors</string>
     <string name="create_spell">Create Spell</string>
+    <string name="school">School</string>
+    <string name="range">Range</string>
+    <string name="area">Area</string>
+    <string name="dice">Dice</string>
+    <string name="duration">Duration</string>
+    <string name="casting_time">Casting Time</string>
 </resources>

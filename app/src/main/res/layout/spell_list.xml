@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="15dp"
+    android:orientation="vertical"
+    android:background="@drawable/selected_row">
+
+    <LinearLayout
+        android:id="@+id/descriptions"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/spellName"
+            android:layout_width="119dp"
+            android:layout_height="wrap_content"
+            tools:text="Nom" />
+
+        <TextView
+            android:id="@+id/schoolText"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:text="school" />
+
+        <TextView
+            android:id="@+id/descriptorsText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Descriptors" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/casting"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/castingInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/casting_time" />
+
+        <TextView
+            android:id="@+id/castingText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/durationInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/duration" />
+
+        <TextView
+            android:id="@+id/durationText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="TextView" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/effects"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/rangeInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/range" />
+
+        <TextView
+            android:id="@+id/rangeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="TextView" />
+
+        <TextView
+            android:id="@+id/areaInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/area" />
+
+        <TextView
+            android:id="@+id/areaText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="TextView" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/spellLevel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Level" />
+
+    <TextView
+        android:id="@+id/spellDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Description" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+
+
+</LinearLayout>

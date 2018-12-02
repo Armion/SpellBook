@@ -7,8 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.armion.spellbook.FileStream;
 import com.example.armion.spellbook.R;
-import com.example.armion.spellbook.spell.Metamagic;
 import com.example.armion.spellbook.spell.Spell;
 
 import java.util.List;
@@ -27,7 +27,7 @@ public class SpellListAdapter extends RecyclerView.Adapter<SpellListAdapter.MyVi
     private final AppCompatActivity parent;
 
 
-    public SpellListAdapter(AppCompatActivity parent, List<Integer> selectedList, List<Spell> metamagicList){
+     SpellListAdapter(AppCompatActivity parent, List<Integer> selectedList, List<Spell> metamagicList){
         super();
 
         this.parent = parent;
@@ -47,7 +47,7 @@ public class SpellListAdapter extends RecyclerView.Adapter<SpellListAdapter.MyVi
 
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
-        View view = inflater.inflate(R.layout.meta_spell_list, parent, false);
+        View view = inflater.inflate(R.layout.spell_list, parent, false);
 
         return new MyViewHolder(view);
 
@@ -91,7 +91,6 @@ public class SpellListAdapter extends RecyclerView.Adapter<SpellListAdapter.MyVi
 
         //let's be safe
         if(index >= 0 && index < spellList.size()) {
-            System.out.println(spell.getName());
             this.spellList.set(index, spell);
             this.notifyItemChanged(index);
         }
@@ -111,7 +110,7 @@ public class SpellListAdapter extends RecyclerView.Adapter<SpellListAdapter.MyVi
 
     public void saveSpell(){
 
-
+        FileStream.saveSpell(spellList, parent.getBaseContext(), "Elyndil");
 
     }
 
@@ -122,9 +121,15 @@ public class SpellListAdapter extends RecyclerView.Adapter<SpellListAdapter.MyVi
         private final TextView name;
         private final TextView description;
         private final TextView level;
+        private final TextView school;
+        private final TextView descriptors;
+        private final TextView range;
+        private final TextView area;
+        private final TextView duration;
+        private final TextView castingTime;
 
 
-        private Spell currentMetamagic;
+        private Spell currentSpell;
 
         /**
          * create the view holder and binding his field to the variables
@@ -135,9 +140,15 @@ public class SpellListAdapter extends RecyclerView.Adapter<SpellListAdapter.MyVi
             super(itemView);
 
             //the field for the view
-            name = itemView.findViewById(R.id.metamagicName);
-            description =  itemView.findViewById(R.id.metaSpellDescription);
-            level =  itemView.findViewById(R.id.metaSpellLevel);
+            name = itemView.findViewById(R.id.spellName);
+            description =  itemView.findViewById(R.id.spellDescription);
+            level =  itemView.findViewById(R.id.spellLevel);
+            school = itemView.findViewById(R.id.schoolText);
+            descriptors = itemView.findViewById(R.id.descriptorsText);
+            range = itemView.findViewById(R.id.rangeText);
+            area = itemView.findViewById(R.id.areaText);
+            duration = itemView.findViewById(R.id.durationText);
+            castingTime = itemView.findViewById(R.id.castingText);
 
 
 
@@ -190,11 +201,20 @@ public class SpellListAdapter extends RecyclerView.Adapter<SpellListAdapter.MyVi
          */
         public void display(Spell spell) {
 
+
             //we actualize the selected metamagic
-            currentMetamagic = spell;
+            currentSpell = spell;
+
             name.setText(spell.getName());
             level.setText(Integer.toString(spell.getLevel()));
             description.setText(spell.getDescription());
+            school.setText(spell.getSchool().toString());
+            descriptors.setText(spell.getDescriptorList().toString());
+            range.setText(spell.getRange());
+            area.setText(spell.getArea());
+            duration.setText(spell.getDuration());
+            castingTime.setText(spell.getCastingTime());
+
         }
     }
 }

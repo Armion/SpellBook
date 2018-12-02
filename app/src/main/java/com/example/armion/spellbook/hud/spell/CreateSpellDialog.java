@@ -10,20 +10,66 @@ import android.support.v4.app.DialogFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 
-
+import com.example.armion.spellbook.Dice;
 import com.example.armion.spellbook.R;
-import com.example.armion.spellbook.spell.Metamagic;
+import com.example.armion.spellbook.spell.Descriptor;
+import com.example.armion.spellbook.spell.School;
 import com.example.armion.spellbook.spell.Spell;
 
 
-public class CreateSpellDialog extends DialogFragment{
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
-    private ArrayAdapter<String> schoolAdapter ;
+public class CreateSpellDialog extends DialogFragment implements AdapterView.OnItemSelectedListener {
+
+
+    private ArrayAdapter<School> schoolArrayAdapter;
+    private ArrayAdapter<Descriptor> descriptorArrayAdapter;
+    private ArrayAdapter<Dice> diceArrayAdapter;
+
+    private Spinner schoolSpinner;
+    private Spinner descriptorSpinner;
+    private Spinner diceSpinner;
+
+    private School schoolselected = School.abjuration;
+    private Descriptor descriptorSelected = Descriptor.fire;
+    private  Dice diceSelected = Dice.d4;
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+
+
+        if(parent.getId() == R.id.schoolSpinner)
+        {
+             schoolselected = ((School) parent.getItemAtPosition(position));
+
+        }
+        else if(parent.getId() == R.id.descriptorsSpinner){
+
+            descriptorSelected = ((Descriptor) parent.getItemAtPosition(position));
+
+        }
+        else if(parent.getId() == R.id.diceSpinner){
+
+            diceSelected = ((Dice) parent.getItemAtPosition(position));
+
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 
     //implementation of the listener interface
     public interface NoticeDialogListener {
@@ -39,6 +85,10 @@ public class CreateSpellDialog extends DialogFragment{
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
+
+
+
 
         // Verify that the host activity implements the callback interface
         try {
@@ -61,6 +111,42 @@ public class CreateSpellDialog extends DialogFragment{
 
 
 
+        schoolArrayAdapter = new ArrayAdapter<>(
+                getActivity().getBaseContext(),
+                android.R.layout.simple_spinner_item,
+                Arrays.asList(School.values())
+        );
+
+        descriptorArrayAdapter = new ArrayAdapter<>(
+                getActivity().getBaseContext(),
+                android.R.layout.simple_spinner_item,
+                Arrays.asList(Descriptor.values())
+        );
+
+        diceArrayAdapter = new ArrayAdapter<>(
+                getActivity().getBaseContext(),
+                android.R.layout.simple_spinner_item,
+                Arrays.asList(Dice.values())
+        );
+
+
+
+        schoolArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        descriptorArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        diceArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        schoolSpinner = view.findViewById(R.id.schoolSpinner);
+        descriptorSpinner = view.findViewById(R.id.descriptorsSpinner);
+        diceSpinner = view.findViewById(R.id.diceSpinner);
+
+        schoolSpinner.setAdapter(schoolArrayAdapter);
+        schoolSpinner.setOnItemSelectedListener(this);
+
+        descriptorSpinner.setAdapter(descriptorArrayAdapter);
+        descriptorSpinner.setOnItemSelectedListener(this);
+
+        diceSpinner.setAdapter(diceArrayAdapter);
+        diceSpinner.setOnItemSelectedListener(this);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
@@ -83,6 +169,9 @@ public class CreateSpellDialog extends DialogFragment{
             public void onClick(DialogInterface dialog, int which) {
 
                 int level = 1;
+                List<Descriptor> descriptors = new ArrayList<>();
+
+                descriptors.add(descriptorSelected);
 
                 try{
 
@@ -91,8 +180,18 @@ public class CreateSpellDialog extends DialogFragment{
                 catch (NumberFormatException e){
                 }
                 finally {
-                    mListener.onDialogPositiveClick(CreateSpellDialog.this,
-                            new Spell(
+                    mListener.onDialogPositiveClick(
+                            CreateSpellDialog.this,
+                            new Spell(schoolselected,
+                                    ((EditText)view.findViewById(R.id.inputRange)).getText().toString(),
+                                    descriptors,
+                                    diceSelected,
+                                    ((EditText)view.findViewById(R.id.inputCasting)).getText().toString(),
+                                    ((EditText)view.findViewById(R.id.inputArea)).getText().toString(),
+                                    ((EditText)view.findViewById(R.id.inputDuration)).getText().toString(),
+                                    ((EditText)view.findViewById(R.id.inputDescription)).getText().toString(),
+                                    ((EditText)view.findViewById(R.id.inputName)).getText().toString(),
+                                    level
                             )
                     );
                 }

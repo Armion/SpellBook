@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.JsonReader;
 
 import com.example.armion.spellbook.spell.Metamagic;
+import com.example.armion.spellbook.spell.Spell;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -21,13 +22,32 @@ import static android.content.Context.MODE_PRIVATE;
 public abstract class FileStream {
 
 
+    public static void saveSpell(List<Spell> spellList, Context context, String name){
+
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        Character character = FileStream.getCharacter(name, context);
+
+        character.setSpellList(spellList);
+
+        FileOutputStream output = null;
+
+
+        try {
+            output = context.openFileOutput(name + ".json", MODE_PRIVATE);
+            output.write(gson.toJson(character).toString().getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     public static void saveMetamagic(List<Metamagic> metamagicList, Context context, String name){
 
 
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
-        Character character = new Character();
+        Character character = FileStream.getCharacter(name, context);
 
         character.setMetamagicList(metamagicList);
 

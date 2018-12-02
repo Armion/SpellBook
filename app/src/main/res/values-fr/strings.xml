@@ -13,5 +13,11 @@
     <string name="description">Description</string>
     <string name="create_metamagic">Creer Magie</string>
     <string name="descriptors">Descripteurs</string>
-    <string name="create_spell">Create Spell</string>
+    <string name="create_spell">Creer sort</string>
+    <string name="school">école</string>
+    <string name="range">Portée</string>
+    <string name="area">Zone</string>
+    <string name="dice">Dés</string>
+    <string name="duration">Durée</string>
+    <string name="casting_time">Temps d\'incantation</string>
 </resources>
