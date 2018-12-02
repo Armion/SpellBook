@@ -1,4 +1,4 @@
-package com.example.armion.spellbook.hud.metamagic;
+package com.example.armion.spellbook.hud.preparedSpell;
 
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -9,40 +9,31 @@ import android.widget.TextView;
 
 import com.example.armion.spellbook.FileStream;
 import com.example.armion.spellbook.R;
-import com.example.armion.spellbook.spell.Metamagic;
-
+import com.example.armion.spellbook.spell.Spell;
 
 import java.util.List;
 
-
-
-
-public class MetaListAdapter extends RecyclerView.Adapter<MetaListAdapter.MyViewHolder>{
-
-
-
-
-
+public class SlotListAdapter  extends RecyclerView.Adapter<SlotListAdapter.MyViewHolder>{
     private List<Integer> selectedList;
-    private List<Metamagic> metamagicList;
+    private List<Spell> spellList;
 
 
-     private final AppCompatActivity parent;
+    private final AppCompatActivity parent;
 
 
-    public MetaListAdapter(AppCompatActivity parent, List<Integer> selectedList, List<Metamagic> metamagicList){
+    SlotListAdapter(AppCompatActivity parent, List<Integer> selectedList, List<Spell> metamagicList){
         super();
 
         this.parent = parent;
         this.selectedList = selectedList;
-        this.metamagicList = metamagicList;
+        this.spellList = metamagicList;
     }
 
 
 
     @Override
     public int getItemCount(){
-        return metamagicList.size();
+        return spellList.size();
     }
 
     @Override
@@ -50,7 +41,7 @@ public class MetaListAdapter extends RecyclerView.Adapter<MetaListAdapter.MyView
 
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
 
-        View view = inflater.inflate(R.layout.meta_spell_list, parent, false);
+        View view = inflater.inflate(R.layout.spell_list, parent, false);
 
         return new MyViewHolder(view);
 
@@ -63,8 +54,8 @@ public class MetaListAdapter extends RecyclerView.Adapter<MetaListAdapter.MyView
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position){
 
-        Metamagic metamagic = metamagicList.get(position);
-        holder.display(metamagic);
+        Spell spell = spellList.get(position);
+        holder.display(spell);
 
     }
 
@@ -72,17 +63,17 @@ public class MetaListAdapter extends RecyclerView.Adapter<MetaListAdapter.MyView
      * a method tu delete an item from the list and update the adapter
      * @param index the index of the item to edit
      */
-    public List<Metamagic> deleteItem(int index){
+    public List<Spell> deleteItem(int index){
 
         //let's be safe !
-        if(index >= 0 && index < metamagicList.size())
+        if(index >= 0 && index < spellList.size())
         {
-            this.metamagicList.remove(index);
+            this.spellList.remove(index);
             this.notifyItemRemoved(index);
-            this.notifyItemRangeChanged(0, metamagicList.size());
+            this.notifyItemRangeChanged(0, spellList.size());
         }
 
-        return metamagicList;
+        return spellList;
 
     }
 
@@ -90,30 +81,31 @@ public class MetaListAdapter extends RecyclerView.Adapter<MetaListAdapter.MyView
      * a method to edit an object from the list and update the adapter
      * @param index the index of the item to edit
      */
-    public List<Metamagic> editItem(int index, Metamagic metamagic){
+    public List<Spell> editItem(int index, Spell spell){
 
         //let's be safe
-        if(index >= 0 && index < metamagicList.size()) {
-            this.metamagicList.set(index, metamagic);
+        if(index >= 0 && index < spellList.size()) {
+            this.spellList.set(index, spell);
             this.notifyItemChanged(index);
         }
 
-        return metamagicList;
+        return spellList;
     }
 
 
-    public List<Metamagic> addItem(Metamagic metamagic){
+    public List<Spell> addItem(Spell spell){
 
-        this.metamagicList.add(metamagic);
+        this.spellList.add(spell);
         this.notifyDataSetChanged();
 
-        return metamagicList;
+        return spellList;
 
     }
 
-    public void saveMetamagic(){
+    public void saveSpell(){
 
-        FileStream.saveMetamagic(metamagicList, parent.getBaseContext(), "Elyndil");
+        FileStream.saveSpell(spellList, parent.getBaseContext(), "Elyndil");
+
     }
 
 
@@ -123,9 +115,15 @@ public class MetaListAdapter extends RecyclerView.Adapter<MetaListAdapter.MyView
         private final TextView name;
         private final TextView description;
         private final TextView level;
+        private final TextView school;
+        private final TextView descriptors;
+        private final TextView range;
+        private final TextView area;
+        private final TextView duration;
+        private final TextView castingTime;
 
 
-        private Metamagic currentMetamagic;
+        private Spell currentSpell;
 
         /**
          * create the view holder and binding his field to the variables
@@ -136,9 +134,18 @@ public class MetaListAdapter extends RecyclerView.Adapter<MetaListAdapter.MyView
             super(itemView);
 
             //the field for the view
-            name = itemView.findViewById(R.id.metamagicName);
-            description =  itemView.findViewById(R.id.metaSpellDescription);
-            level =  itemView.findViewById(R.id.metaSpellLevel);
+            name = itemView.findViewById(R.id.spellName);
+            description =  itemView.findViewById(R.id.spellDescription);
+            level =  itemView.findViewById(R.id.spellLevel);
+            school = itemView.findViewById(R.id.schoolText);
+            descriptors = itemView.findViewById(R.id.descriptorsText);
+            range = itemView.findViewById(R.id.rangeText);
+            area = itemView.findViewById(R.id.areaText);
+            duration = itemView.findViewById(R.id.durationText);
+            castingTime = itemView.findViewById(R.id.castingText);
+
+
+
 
 
 
@@ -187,15 +194,24 @@ public class MetaListAdapter extends RecyclerView.Adapter<MetaListAdapter.MyView
 
         /**
          * binding our class to the view
-         * @param metamagic the metamagic to display
+         * @param spell the metamagic to display
          */
-        public void display(Metamagic metamagic) {
+        public void display(Spell spell) {
+
 
             //we actualize the selected metamagic
-            currentMetamagic = metamagic;
-            name.setText(metamagic.getName());
-            level.setText(Integer.toString(metamagic.getLevel()));
-            description.setText(metamagic.getDescription());
+            currentSpell = spell;
+
+            name.setText(spell.getName());
+            level.setText(Integer.toString(spell.getLevel()));
+            description.setText(spell.getDescription());
+            school.setText(spell.getSchool().toString());
+            descriptors.setText(spell.getDescriptorList().toString());
+            range.setText(spell.getRange());
+            area.setText(spell.getArea());
+            duration.setText(spell.getDuration());
+            castingTime.setText(spell.getCastingTime());
+
         }
     }
 }

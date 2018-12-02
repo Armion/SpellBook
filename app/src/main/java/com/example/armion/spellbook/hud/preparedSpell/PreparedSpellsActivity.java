@@ -1,4 +1,4 @@
-package com.example.armion.spellbook.hud.spell;
+package com.example.armion.spellbook.hud.preparedSpell;
 
 import android.content.Intent;
 import android.support.v4.app.DialogFragment;
@@ -11,20 +11,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-
 import com.example.armion.spellbook.FileStream;
 import com.example.armion.spellbook.R;
-import com.example.armion.spellbook.hud.preparedSpell.PreparedSpellsActivity;
-import com.example.armion.spellbook.hud.metamagic.MetaSpellActivity;
+import com.example.armion.spellbook.hud.SummaryActivity;
+import com.example.armion.spellbook.hud.spell.CreateSpellDialog;
+import com.example.armion.spellbook.hud.spell.SpellBookActivity;
 import com.example.armion.spellbook.spell.Spell;
-
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class SpellBookActivity extends AppCompatActivity implements CreateSpellDialog.NoticeDialogListener{
-
+public class PreparedSpellsActivity extends AppCompatActivity implements CreateSpellDialog.NoticeDialogListener {
 
     // a simple list for test waiting for the loading system for real metamagic spells
     private List<Spell> spellList = new ArrayList<>();
@@ -38,7 +36,7 @@ public class SpellBookActivity extends AppCompatActivity implements CreateSpellD
 
     private float x1,x2;
     static final int MIN_DISTANCE = 150;
-    private SpellListAdapter spellListAdapter;
+    private SlotListAdapter spellListAdapter;
     private Button addButton;
     private Button deleteButton;
     private Button editButton;
@@ -49,16 +47,16 @@ public class SpellBookActivity extends AppCompatActivity implements CreateSpellD
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        spellList = FileStream.getCharacter("Elyndil", this.getBaseContext()).getSpellList();
+        spellList = FileStream.getCharacter("noname", this.getBaseContext()).getSpellList();
 
-        spellListAdapter = new SpellListAdapter(this, spellSelected, spellList);
+        spellListAdapter = new SlotListAdapter(this, spellSelected, spellList);
 
 
 
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meta_spell);
-        setTitle(R.string.spell_book_name);
+        setTitle(R.string.prepared_spell_name);
 
         addButton = findViewById(R.id.buttonCreate);
         deleteButton = findViewById(R.id.buttonDelete);
@@ -125,9 +123,6 @@ public class SpellBookActivity extends AppCompatActivity implements CreateSpellD
 
     }
 
-    /**
-     * method called when a button is clicked to clear the list and reset the button states
-     */
     public void buttonClicked(){
 
         for(int i = 0; i < 0 ; spellRecycler.getChildCount()){
@@ -141,8 +136,6 @@ public class SpellBookActivity extends AppCompatActivity implements CreateSpellD
 
 
     }
-
-
 
     @Override
     public boolean onTouchEvent(MotionEvent event)
@@ -161,16 +154,14 @@ public class SpellBookActivity extends AppCompatActivity implements CreateSpellD
                     // Left to Right swipe action
                     if (x2 > x1) {
                         Toast.makeText(this, "Left to Right swipe", Toast.LENGTH_SHORT).show();
-                        spellListAdapter.saveSpell();
-                        startActivity(new Intent(this, PreparedSpellsActivity.class));
+                        startActivity(new Intent(this, SummaryActivity.class));
                     }
 
                     // Right to left swipe action
                     else
                     {
                         Toast.makeText(this, "Right to Left swipe", Toast.LENGTH_SHORT).show ();
-                        spellListAdapter.saveSpell();
-                        startActivity(new Intent(this, MetaSpellActivity.class));
+                        startActivity(new Intent(this, SpellBookActivity.class));
 
                     }
 
@@ -183,7 +174,6 @@ public class SpellBookActivity extends AppCompatActivity implements CreateSpellD
         }
         return super.onTouchEvent(event);
     }
-
 
     @Override
     public void onDialogPositiveClick(DialogFragment dialog, Spell spell) {

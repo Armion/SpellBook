@@ -154,6 +154,9 @@ public class SpellListAdapter extends RecyclerView.Adapter<SpellListAdapter.MyVi
 
 
 
+
+
+
             //when the user click on the item we mark the item as selected and add him in the selected item list
             itemView.setOnClickListener(new View.OnClickListener() {
 

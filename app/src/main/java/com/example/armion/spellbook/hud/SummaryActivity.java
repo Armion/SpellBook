@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.widget.Toast;
 
 import com.example.armion.spellbook.R;
+import com.example.armion.spellbook.hud.preparedSpell.PreparedSpellsActivity;
 import com.example.armion.spellbook.spell.School;
 
 

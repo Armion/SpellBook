@@ -7,7 +7,7 @@ import java.util.List;
 public class PreparedSpell {
 
     Spell spell;
-    List<Metamagic> metamagicList = new ArrayList<Metamagic>();
+    List<Metamagic> metamagicList = new ArrayList<>();
 
     public Spell getSpell() {
         return spell;
