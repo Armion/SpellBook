@@ -6,6 +6,10 @@
 
 package com.example.armion.spellbook.spell;
 
+import android.content.Context;
+
+import com.example.armion.spellbook.R;
+
 public enum Descriptor {
 
 
@@ -50,6 +54,7 @@ public enum Descriptor {
     //Constructor
     Descriptor(String name){
         this.name = name;
+
     }
 
     public String toString(){

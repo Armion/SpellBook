@@ -19,4 +19,5 @@
     <string name="dice">Dice</string>
     <string name="duration">Duration</string>
     <string name="casting_time">Casting Time</string>
+    <string name="ice">Ice</string>
 </resources>

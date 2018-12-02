@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -17,6 +18,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 
+import com.androidbuts.multispinnerfilter.MultiSpinner;
+import com.androidbuts.multispinnerfilter.MultiSpinnerListener;
 import com.example.armion.spellbook.Dice;
 import com.example.armion.spellbook.R;
 import com.example.armion.spellbook.spell.Descriptor;
@@ -26,6 +29,7 @@ import com.example.armion.spellbook.spell.Spell;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 
@@ -37,12 +41,14 @@ public class CreateSpellDialog extends DialogFragment implements AdapterView.OnI
     private ArrayAdapter<Dice> diceArrayAdapter;
 
     private Spinner schoolSpinner;
-    private Spinner descriptorSpinner;
+    private MultiSpinner descriptorSpinner;
     private Spinner diceSpinner;
 
     private School schoolselected = School.abjuration;
-    private Descriptor descriptorSelected = Descriptor.fire;
+    private List<Descriptor> descriptorsSelected = new ArrayList<>();
     private  Dice diceSelected = Dice.d4;
+
+    private List<Descriptor> descriptorList;
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -52,11 +58,6 @@ public class CreateSpellDialog extends DialogFragment implements AdapterView.OnI
         if(parent.getId() == R.id.schoolSpinner)
         {
              schoolselected = ((School) parent.getItemAtPosition(position));
-
-        }
-        else if(parent.getId() == R.id.descriptorsSpinner){
-
-            descriptorSelected = ((Descriptor) parent.getItemAtPosition(position));
 
         }
         else if(parent.getId() == R.id.diceSpinner){
@@ -117,12 +118,6 @@ public class CreateSpellDialog extends DialogFragment implements AdapterView.OnI
                 Arrays.asList(School.values())
         );
 
-        descriptorArrayAdapter = new ArrayAdapter<>(
-                getActivity().getBaseContext(),
-                android.R.layout.simple_spinner_item,
-                Arrays.asList(Descriptor.values())
-        );
-
         diceArrayAdapter = new ArrayAdapter<>(
                 getActivity().getBaseContext(),
                 android.R.layout.simple_spinner_item,
@@ -132,18 +127,40 @@ public class CreateSpellDialog extends DialogFragment implements AdapterView.OnI
 
 
         schoolArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        descriptorArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         diceArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         schoolSpinner = view.findViewById(R.id.schoolSpinner);
-        descriptorSpinner = view.findViewById(R.id.descriptorsSpinner);
+        descriptorSpinner =  view.findViewById(R.id.descriptorsSpinner);
         diceSpinner = view.findViewById(R.id.diceSpinner);
 
         schoolSpinner.setAdapter(schoolArrayAdapter);
         schoolSpinner.setOnItemSelectedListener(this);
 
-        descriptorSpinner.setAdapter(descriptorArrayAdapter);
-        descriptorSpinner.setOnItemSelectedListener(this);
+
+        descriptorList = Arrays.asList(Descriptor.values());
+
+         LinkedHashMap<String, Boolean> test = new LinkedHashMap<>();
+
+         for(Descriptor d : descriptorList){
+             test.put(d.toString(), false);
+         }
+
+
+        descriptorSpinner.setItems(test, new MultiSpinnerListener() {
+
+            @Override
+            public void onItemsSelected(boolean[] selected) {
+
+                descriptorsSelected.clear();
+
+                // your operation with code...
+                for(int i=0; i<selected.length; i++) {
+                    if(selected[i]) {
+                        descriptorsSelected.add(descriptorList.get(i));
+                    }
+                }
+            }
+        });
 
         diceSpinner.setAdapter(diceArrayAdapter);
         diceSpinner.setOnItemSelectedListener(this);
@@ -169,9 +186,9 @@ public class CreateSpellDialog extends DialogFragment implements AdapterView.OnI
             public void onClick(DialogInterface dialog, int which) {
 
                 int level = 1;
-                List<Descriptor> descriptors = new ArrayList<>();
 
-                descriptors.add(descriptorSelected);
+
+
 
                 try{
 
@@ -184,7 +201,7 @@ public class CreateSpellDialog extends DialogFragment implements AdapterView.OnI
                             CreateSpellDialog.this,
                             new Spell(schoolselected,
                                     ((EditText)view.findViewById(R.id.inputRange)).getText().toString(),
-                                    descriptors,
+                                    descriptorsSelected,
                                     diceSelected,
                                     ((EditText)view.findViewById(R.id.inputCasting)).getText().toString(),
                                     ((EditText)view.findViewById(R.id.inputArea)).getText().toString(),
