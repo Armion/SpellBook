@@ -22,6 +22,24 @@ import static android.content.Context.MODE_PRIVATE;
 public abstract class FileStream {
 
 
+    public static void saveLife(int life, Context context, String name){
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        Character character = FileStream.getCharacter(name, context);
+
+        character.setHp(life);
+
+        FileOutputStream output = null;
+
+
+        try {
+            output = context.openFileOutput(name + ".json", MODE_PRIVATE);
+            output.write(gson.toJson(character).toString().getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void saveSpell(List<Spell> spellList, Context context, String name){
 
         GsonBuilder builder = new GsonBuilder();

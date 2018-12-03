@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 
 import com.example.armion.spellbook.R;
+import com.example.armion.spellbook.hud.Summary.SummaryActivity;
 
 
 public class StatisticsActivity extends AppCompatActivity {

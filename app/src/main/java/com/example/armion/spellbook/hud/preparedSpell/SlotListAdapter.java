@@ -1,6 +1,5 @@
 package com.example.armion.spellbook.hud.preparedSpell;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;

@@ -14,7 +14,7 @@ import android.widget.Toast;
 import com.example.armion.spellbook.FileStream;
 import com.example.armion.spellbook.R;
 import com.example.armion.spellbook.SpellSlot;
-import com.example.armion.spellbook.hud.SummaryActivity;
+import com.example.armion.spellbook.hud.Summary.SummaryActivity;
 import com.example.armion.spellbook.hud.spell.SpellBookActivity;
 
 import java.util.ArrayList;
