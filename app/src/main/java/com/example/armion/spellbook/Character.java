@@ -11,6 +11,7 @@ import com.example.armion.spellbook.spell.Spell;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Character {
 
@@ -153,4 +154,6 @@ public class Character {
     public void setSpellSlotList(List<SpellSlot> spellSlotList) {
         this.spellSlotList = spellSlotList;
     }
+
+
 }

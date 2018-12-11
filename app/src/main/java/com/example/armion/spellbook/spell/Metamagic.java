@@ -1,17 +1,26 @@
 package com.example.armion.spellbook.spell;
 
-import java.util.Objects;
+import java.util.UUID;
 
 public class Metamagic {
 
     String name;
     int level;
     String description;
+    UUID id;
 
     public Metamagic(String name, int level, String description) {
         this.name = name;
         this.level = level;
         this.description = description;
+        this.id = UUID.randomUUID();
+    }
+
+    public Metamagic(String name, int level, String description, UUID id) {
+        this.name = name;
+        this.level = level;
+        this.description = description;
+        this.id = id;
     }
 
     public String getName() {
@@ -36,6 +45,14 @@ public class Metamagic {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     @Override

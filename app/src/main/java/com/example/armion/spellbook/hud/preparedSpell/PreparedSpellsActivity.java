@@ -16,6 +16,7 @@ import com.example.armion.spellbook.R;
 import com.example.armion.spellbook.SpellSlot;
 import com.example.armion.spellbook.hud.Summary.SummaryActivity;
 import com.example.armion.spellbook.hud.spell.SpellBookActivity;
+import com.example.armion.spellbook.spell.Metamagic;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -95,10 +96,17 @@ public class PreparedSpellsActivity extends AppCompatActivity implements CreateS
 
                 //getting the selected spellSlot
                 SpellSlot spellSlot = spellSlotList.get(spellSelected.get(0));
+                ArrayList<String> metaMagicsID = new ArrayList<>();
+
+                for(Metamagic m : spellSlot.getPreparedSpell().getMetamagicList()){
+                    metaMagicsID.add(m.getId().toString());
+                }
 
                 //passing the spellSlot to the editDialog
                 Bundle bundle = new Bundle();
                 bundle.putString("level", spellSlot.getLevel() + "");
+                bundle.putString("spellSlotId", spellSlot.getPreparedSpell().getSpell().getId().toString());
+                bundle.putStringArrayList("metaMagicsId", metaMagicsID);
 
                 editDialog.setArguments(bundle);
                 editDialog.show(getSupportFragmentManager(), "editSpells");
@@ -185,6 +193,7 @@ public class PreparedSpellsActivity extends AppCompatActivity implements CreateS
             }
             if(dialog == editDialog){
 
+                spellSlotList = spellListAdapter.editItem(spellSelected.get(0), slot);
                 buttonClicked();
             }
 

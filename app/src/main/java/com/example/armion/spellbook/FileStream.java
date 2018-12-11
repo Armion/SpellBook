@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.UUID;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -135,7 +136,6 @@ public abstract class FileStream {
             in = context.openFileInput(name + ".json");
 
             character = gson.fromJson(new InputStreamReader(in, "UTF-8"), Character.class);
-            System.out.println(character.getCharisma());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (UnsupportedEncodingException e) {
@@ -147,7 +147,6 @@ public abstract class FileStream {
 
 
     }
-
 
 
 }

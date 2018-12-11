@@ -10,21 +10,24 @@ import com.example.armion.spellbook.Dice;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class Spell {
 
-    School school;
-    String range;
-    List<Descriptor> descriptorList = new ArrayList<>();
-    Dice dice;
-    String castingTime;
-    String area;
-    String duration;
-    String description;
-    String name;
-    int level;
+    private  School school;
+    private String range;
+    private List<Descriptor> descriptorList = new ArrayList<>();
+    private Dice dice;
+    private String castingTime;
+    private String area;
+    private String duration;
+    private String description;
+    private String name;
+    private int level;
+    private UUID id;
 
     public Spell(){}
+
     public Spell(School school, String range, List<Descriptor> descriptorList, Dice dice, String castingTime, String area, String duration, String description, String name, int level) {
         this.school = school;
         this.range = range;
@@ -36,6 +39,21 @@ public class Spell {
         this.description = description;
         this.name = name;
         this.level = level;
+        this.id = UUID.randomUUID();
+    }
+
+    public Spell(School school, String range, List<Descriptor> descriptorList, Dice dice, String castingTime, String area, String duration, String description, String name, int level, UUID id) {
+        this.school = school;
+        this.range = range;
+        this.descriptorList = descriptorList;
+        this.dice = dice;
+        this.castingTime = castingTime;
+        this.area = area;
+        this.duration = duration;
+        this.description = description;
+        this.name = name;
+        this.level = level;
+        this.id = id;
     }
 
     public School getSchool() {
@@ -116,6 +134,14 @@ public class Spell {
 
     public void setLevel(int level) {
         this.level = level;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     @Override

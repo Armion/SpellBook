@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -27,6 +26,7 @@ import com.example.armion.spellbook.spell.Spell;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.UUID;
 
 
 public class CreateSlotDialog extends DialogFragment implements AdapterView.OnItemSelectedListener {
@@ -49,8 +49,10 @@ public class CreateSlotDialog extends DialogFragment implements AdapterView.OnIt
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-        if(parent.getId() == R.id.spellSpinner)
-        spellSelected =  (Spell)parent.getItemAtPosition(position);
+        if(parent.getId() == R.id.spellSpinner){
+            spellSelected =  (Spell)parent.getItemAtPosition(position);
+        }
+
     }
 
     @Override
@@ -94,6 +96,7 @@ public class CreateSlotDialog extends DialogFragment implements AdapterView.OnIt
 
         spellList = character.getSpellList();
         metamagicList = character.getMetamagicList();
+        int i = 0;
 
 
 
@@ -119,7 +122,7 @@ public class CreateSlotDialog extends DialogFragment implements AdapterView.OnIt
 
                 metamagicsSelected.clear();
 
-                // your operation with code...
+
                 for(int i=0; i<selected.length; i++) {
                     if(selected[i]) {
                         metamagicsSelected.add(metamagicList.get(i));
@@ -142,7 +145,32 @@ public class CreateSlotDialog extends DialogFragment implements AdapterView.OnIt
         //if this is called with args for the metamagic
         try{
 
+
             ((EditText)view.findViewById(R.id.inputLevel)).setText(getArguments().getString("level"));
+
+            while(i < spellList.size()  && ! spellList.get(i).getId().toString().equals(getArguments().getString("spellSlotId"))){
+                i ++;
+            }
+            //if the item have not been found then i = spellList.size()
+            if( i < spellList.size() ){
+                spellSpinner.setSelection(i);
+                spellSelected = spellList.get(i);
+            }
+
+
+
+                for(i = 0; i < metaMultiSpinnerList.size(); i++){
+
+                    for(String id : getArguments().getStringArrayList("metaMagicsId")){
+                        if(metamagicList.get(i).getId().equals(UUID.fromString(id))){
+                            metamagicsSelected.add(metamagicList.get(i));
+                        }
+                    }
+
+                }
+
+
+
 
         }
         catch (NullPointerException e){

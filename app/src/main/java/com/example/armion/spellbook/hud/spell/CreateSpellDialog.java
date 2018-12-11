@@ -171,6 +171,11 @@ public class CreateSpellDialog extends DialogFragment implements AdapterView.OnI
             ((EditText)view.findViewById(R.id.inputName)).setText(getArguments().getString("name"));
             ((EditText)view.findViewById(R.id.inputLevel)).setText(getArguments().getString("level"));
             ((EditText)view.findViewById(R.id.inputDescription)).setText(getArguments().getString("description"));
+            ((EditText)view.findViewById(R.id.inputArea)).setText(getArguments().getString("area"));
+            ((EditText)view.findViewById(R.id.inputCasting)).setText(getArguments().getString("castingTime"));
+            ((EditText)view.findViewById(R.id.inputDuration)).setText(getArguments().getString("duration"));
+            ((EditText)view.findViewById(R.id.inputRange)).setText(getArguments().getString("range"));
+
         }
         catch (NullPointerException e){
 

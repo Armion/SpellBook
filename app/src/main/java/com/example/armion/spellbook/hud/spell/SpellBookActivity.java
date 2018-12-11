@@ -104,6 +104,12 @@ public class SpellBookActivity extends AppCompatActivity implements CreateSpellD
                 bundle.putString("name", spell.getName());
                 bundle.putString("level", spell.getLevel() + "");
                 bundle.putString("description", spell.getDescription());
+                bundle.putString("area", spell.getArea());
+                bundle.putString("castingTime", spell.getCastingTime());
+                bundle.putString("duration", spell.getDuration());
+                bundle.putString("range", spell.getRange());
+                bundle.putString("dice", spell.getDice().name());
+                bundle.putString("", spell.getSchool().name());
 
                 editDialog.setArguments(bundle);
                 editDialog.show(getSupportFragmentManager(), "editSpells");

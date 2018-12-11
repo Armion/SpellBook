@@ -217,6 +217,11 @@ public class SlotListAdapter  extends RecyclerView.Adapter<SlotListAdapter.MyVie
             slotLevel.setText(spellSlot.getLevel() + "");
             spellLevel.setText(spellSlot.getPreparedSpell().getLevel() + "");
 
+            if(spellSlot.getLevel() < spellSlot.getPreparedSpell().getLevel()){
+                ((View)used.getParent()).setBackgroundColor(Color.DKGRAY);
+
+            }
+
         }
     }
 }
