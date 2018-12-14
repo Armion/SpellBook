@@ -149,12 +149,22 @@ public class SlotListAdapter  extends RecyclerView.Adapter<SlotListAdapter.MyVie
              used.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                  @Override
                  public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                     if(isChecked){
-                         ((View) buttonView.getParent()).setBackgroundColor(Color.RED);
+
+                     if(currentSpellSlot.getLevel() < currentSpellSlot.getPreparedSpell().getLevel()){
+                         ((View)used).setBackgroundColor(Color.DKGRAY);
+
                      }
-                     else{
-                         ((View) buttonView.getParent()).setBackgroundColor(Color.WHITE);
+                     else
+                     {
+                         if(isChecked){
+                             ((View) buttonView).setBackgroundColor(Color.RED);
+                         }
+                         else{
+                             ((View) buttonView).setBackgroundColor(Color.WHITE);
+                         }
+
                      }
+
 
                  }
              });
@@ -218,7 +228,7 @@ public class SlotListAdapter  extends RecyclerView.Adapter<SlotListAdapter.MyVie
             spellLevel.setText(spellSlot.getPreparedSpell().getLevel() + "");
 
             if(spellSlot.getLevel() < spellSlot.getPreparedSpell().getLevel()){
-                ((View)used.getParent()).setBackgroundColor(Color.DKGRAY);
+                ((View)used).setBackgroundColor(Color.DKGRAY);
 
             }
 

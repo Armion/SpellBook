@@ -21,14 +21,21 @@ public class Character {
     private int wisdom ;
     private int constitution;
     private int charisma;
+    private int maxHP;
     private int hp;
     private int level;
     private List<Spell> spellList;
     private List<Metamagic> metamagicList;
     private String name;
     private List<SpellSlot> spellSlotList;
+    private float maxWeight;
+    private float weight;
+    private Bag bag;
+    private Money money;
 
-    public Character(int intelligence, int strength, int endurance, int wisdom, int constitution, int charisma, int hp, int level, List<Spell> spellList, List<Metamagic> metamagicList, String name, List<SpellSlot> spellSlotList) {
+
+
+    public Character(int intelligence, int strength, int endurance, int wisdom, int constitution, int charisma, int hp, int level, List<Spell> spellList, List<Metamagic> metamagicList, String name, List<SpellSlot> spellSlotList, Bag bag, Money money) {
         this.intelligence = intelligence;
         this.strength = strength;
         this.endurance = endurance;
@@ -41,6 +48,8 @@ public class Character {
         this.metamagicList = metamagicList;
         this.name = name;
         this.spellSlotList = spellSlotList;
+        this.bag = bag;
+        this.money = money;
     }
 
     public Character(){
@@ -56,6 +65,9 @@ public class Character {
         this.spellSlotList = new ArrayList<>();
         this.metamagicList = new ArrayList<>();
         this.name = "";
+        this.spellSlotList = new ArrayList<>();
+        this.bag = new Bag();
+        this.money = new Money();
 
     }
 
@@ -155,5 +167,43 @@ public class Character {
         this.spellSlotList = spellSlotList;
     }
 
+    public Bag getBag() {
+        return bag;
+    }
 
+    public void setBag(Bag bag) {
+        this.bag = bag;
+    }
+
+    public Money getMoney() {
+        return money;
+    }
+
+    public void setMoney(Money money) {
+        this.money = money;
+    }
+
+    public int getMaxHP() {
+        return maxHP;
+    }
+
+    public void setMaxHP(int maxHP) {
+        this.maxHP = maxHP;
+    }
+
+    public float getMaxWeight() {
+        return maxWeight;
+    }
+
+    public void setMaxWeight(float maxWeight) {
+        this.maxWeight = maxWeight;
+    }
+
+    public float getWeight() {
+        return weight;
+    }
+
+    public void setWeight(float weight) {
+        this.weight = weight;
+    }
 }

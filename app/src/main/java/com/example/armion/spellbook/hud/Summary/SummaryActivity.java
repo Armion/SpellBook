@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.armion.spellbook.Character;
 import com.example.armion.spellbook.FileStream;
 import com.example.armion.spellbook.R;
 import com.example.armion.spellbook.hud.StatisticsActivity;
@@ -34,7 +35,12 @@ public class SummaryActivity extends AppCompatActivity implements View.OnClickLi
     private TextView pvText;
     private TextView amount;
 
-    private int pv;
+    private TextView platinum;
+    private TextView gold;
+    private  TextView silver;
+    private  TextView copper;
+
+    private Character character;
 
 
 
@@ -51,10 +57,26 @@ public class SummaryActivity extends AppCompatActivity implements View.OnClickLi
         increaseButton = findViewById(R.id.increaseLife);
         increaseButton.setOnClickListener(this);
 
-        pv = FileStream.getCharacter("Elyndil", getBaseContext()).getHp();
+        character = FileStream.getCharacter("Elyndil", getBaseContext());
 
         pvText = findViewById(R.id.pvInput);
-        pvText.setText(pv + "");
+        pvText.setText( character.getHp() + "/" + character.getMaxHP());
+
+        platinum = findViewById(R.id.platinumInput);
+        platinum.setText(character.getMoney().getPlatinumPieces() + "");
+
+        gold = findViewById(R.id.goldInput);
+        gold.setText(character.getMoney().getGoldPieces() + "");
+
+        silver = findViewById(R.id.silverInput);
+        silver.setText(character.getMoney().getSilverPieces() + "");
+
+        copper = findViewById(R.id.copperInput);
+        copper.setText(character.getMoney().getCopperPieces() + "");
+
+
+
+
 
         amount = findViewById(R.id.amountInput);
 
@@ -78,16 +100,14 @@ public class SummaryActivity extends AppCompatActivity implements View.OnClickLi
                 {
                     // Left to Right swipe action
                     if (x2 > x1) {
-                        Toast.makeText(this, "Left to Right swipe", Toast.LENGTH_SHORT).show();
-                        FileStream.saveLife(pv, getBaseContext(), "Elyndil");
+                        FileStream.saveLife(character.getHp(), getBaseContext(), "Elyndil");
                         startActivity(new Intent(this, StatisticsActivity.class));
                     }
 
                     // Right to left swipe action
                     else
                     {
-                        Toast.makeText(this, "Right to Left swipe", Toast.LENGTH_SHORT).show ();
-                        FileStream.saveLife(pv, getBaseContext(), "Elyndil");
+                        FileStream.saveLife(character.getHp(), getBaseContext(), "Elyndil");
                         startActivity(new Intent(this, PreparedSpellsActivity.class));
 
                     }
@@ -108,13 +128,13 @@ public class SummaryActivity extends AppCompatActivity implements View.OnClickLi
         int life = Integer.valueOf(amount.getText().toString());
 
         if(v == reduceButton){
-            pv -= life;
+            character.setHp(character.getHp() - life);
         }
         else{
-            pv += life;
+            character.setHp(character.getHp() + life);
         }
 
-        pvText.setText(pv + "");
+        pvText.setText(character.getHp() + "/" + character.getMaxHP());
 
     }
 }
