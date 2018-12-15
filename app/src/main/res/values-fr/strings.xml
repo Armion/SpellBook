@@ -24,4 +24,8 @@
     <string name="used">Utilisé</string>
     <string name="avalable">Disponible</string>
     <string name="spell">Sort</string>
+    <string name="value">Valeur</string>
+    <string name="weight">Poids</string>
+    <string name="durability">Usure</string>
+    <string name="create_item">creer Objet</string>
 </resources>

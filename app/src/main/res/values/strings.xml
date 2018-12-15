@@ -23,4 +23,8 @@
     <string name="used">Used</string>
     <string name="avalable">Avalable</string>
     <string name="spell">Spell</string>
+    <string name="value">Value</string>
+    <string name="weight">Weight</string>
+    <string name="durability">Durability</string>
+    <string name="create_item">Create Item</string>
 </resources>

@@ -2,6 +2,7 @@ package com.example.armion.spellbook;
 
 import android.content.Context;
 import android.util.JsonReader;
+import android.widget.Toast;
 
 import com.example.armion.spellbook.spell.Metamagic;
 import com.example.armion.spellbook.spell.Spell;
@@ -61,6 +62,31 @@ public abstract class FileStream {
 
     }
 
+    public static void saveBag(List<Item> itemList, Context context, String name){
+
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        Character character = FileStream.getCharacter(name, context);
+
+        Bag bag = character.getBag();
+
+        bag.setItems(itemList);
+
+        character.setBag(bag);
+
+        FileOutputStream output = null;
+
+
+        try {
+            output = context.openFileOutput(name + ".json", MODE_PRIVATE);
+            output.write(gson.toJson(character).toString().getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(context, "impossible d'enregistrer  le sac !", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
     public static void saveSpellSlot(List<SpellSlot> spellList, Context context, String name){
 
         GsonBuilder builder = new GsonBuilder();
@@ -101,6 +127,21 @@ public abstract class FileStream {
         }
 
 
+
+
+    }
+    public static void saveMoney(Context context, Money money, String name){
+
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        Character character = FileStream.getCharacter(name, context);
+
+        character.setMoney(money);
+
+        FileOutputStream output = null;
+
+
+        FileStream.saveCharacter(character, name, context);
 
 
     }
@@ -147,6 +188,8 @@ public abstract class FileStream {
 
 
     }
+
+
 
 
 }

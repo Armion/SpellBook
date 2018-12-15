@@ -53,4 +53,9 @@ public class Money {
     public void setPlatinumPieces(int platinumPieces) {
         this.platinumPieces = platinumPieces;
     }
+
+    @Override
+    public String toString(){
+        return this.platinumPieces + " P " + this.goldPieces + " G " + this.silverPieces + " S " + this.copperPieces + " C ";
+    }
 }
