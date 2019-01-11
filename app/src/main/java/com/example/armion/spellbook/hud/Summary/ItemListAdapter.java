@@ -137,7 +137,7 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.MyView
             //the field for the view
             name = itemView.findViewById(R.id.itemNameInput);
             description =  itemView.findViewById(R.id.descriptionInput);
-            weight = itemView.findViewById(R.id.descriptionInput);
+            weight = itemView.findViewById(R.id.weightInput);
             value = itemView.findViewById(R.id.valueInput);
             durability = itemView.findViewById(R.id.durabilityInput);
 
@@ -199,12 +199,11 @@ public class ItemListAdapter extends RecyclerView.Adapter<ItemListAdapter.MyView
 
             //we actualize the selected metamagic
             currentItem = item;
-
             name.setText(item.getName());
             description.setText(item.getDescription());
             value.setText(item.getValue().toString());
-            weight.setText(Integer.toString(item.getDurability()));
-            durability.setText(Float.toString(item.getDurability()));
+            weight.setText(Float.toString(item.getWeight()));
+            durability.setText(Integer.toString(item.getDurability()));
         }
     }
 }

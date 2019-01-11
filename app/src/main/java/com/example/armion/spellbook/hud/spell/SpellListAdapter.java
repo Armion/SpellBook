@@ -127,6 +127,7 @@ public class SpellListAdapter extends RecyclerView.Adapter<SpellListAdapter.MyVi
         private final TextView area;
         private final TextView duration;
         private final TextView castingTime;
+        private final TextView link;
 
 
         private Spell currentSpell;
@@ -149,6 +150,7 @@ public class SpellListAdapter extends RecyclerView.Adapter<SpellListAdapter.MyVi
             area = itemView.findViewById(R.id.areaText);
             duration = itemView.findViewById(R.id.durationText);
             castingTime = itemView.findViewById(R.id.castingText);
+            link = itemView.findViewById(R.id.spellLink);
 
 
 
@@ -217,6 +219,7 @@ public class SpellListAdapter extends RecyclerView.Adapter<SpellListAdapter.MyVi
             area.setText(spell.getArea());
             duration.setText(spell.getDuration());
             castingTime.setText(spell.getCastingTime());
+            link.setText(spell.getLink());
 
         }
     }

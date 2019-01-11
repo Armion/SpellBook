@@ -212,7 +212,9 @@ public class CreateSpellDialog extends DialogFragment implements AdapterView.OnI
                                     ((EditText)view.findViewById(R.id.inputDuration)).getText().toString(),
                                     ((EditText)view.findViewById(R.id.inputDescription)).getText().toString(),
                                     ((EditText)view.findViewById(R.id.inputName)).getText().toString(),
-                                    level
+                                    level,
+                                    ((EditText)view.findViewById(R.id.linkInput)).getText().toString()
+
                             )
                     );
                 }

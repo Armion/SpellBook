@@ -25,10 +25,11 @@ public class Spell {
     private String name;
     private int level;
     private UUID id;
+    private String link;
 
     public Spell(){}
 
-    public Spell(School school, String range, List<Descriptor> descriptorList, Dice dice, String castingTime, String area, String duration, String description, String name, int level) {
+    public Spell(School school, String range, List<Descriptor> descriptorList, Dice dice, String castingTime, String area, String duration, String description, String name, int level, String link) {
         this.school = school;
         this.range = range;
         this.descriptorList = descriptorList;
@@ -40,9 +41,10 @@ public class Spell {
         this.name = name;
         this.level = level;
         this.id = UUID.randomUUID();
+        this.link = link;
     }
 
-    public Spell(School school, String range, List<Descriptor> descriptorList, Dice dice, String castingTime, String area, String duration, String description, String name, int level, UUID id) {
+    public Spell(School school, String range, List<Descriptor> descriptorList, Dice dice, String castingTime, String area, String duration, String description, String name, int level, UUID id, String link) {
         this.school = school;
         this.range = range;
         this.descriptorList = descriptorList;
@@ -54,6 +56,7 @@ public class Spell {
         this.name = name;
         this.level = level;
         this.id = id;
+        this.link = link;
     }
 
     public School getSchool() {
@@ -149,4 +152,11 @@ public class Spell {
         return this.name;
     }
 
+    public String getLink() {
+        return link;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
 }

@@ -46,7 +46,7 @@
 
             <EditText
                 android:id="@+id/platinumInput"
-                android:layout_width="30dp"
+                android:layout_width="45dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
@@ -68,7 +68,7 @@
 
             <EditText
                 android:id="@+id/goldInput"
-                android:layout_width="30dp"
+                android:layout_width="45dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
@@ -84,7 +84,7 @@
 
             <EditText
                 android:id="@+id/silverInput"
-                android:layout_width="30dp"
+                android:layout_width="45dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
@@ -100,7 +100,7 @@
 
             <EditText
                 android:id="@+id/copperInput"
-                android:layout_width="30dp"
+                android:layout_width="45dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
@@ -121,8 +121,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="TextView"
-                tools:text="@string/weight" />
+                android:text="@string/weight" />
 
             <EditText
                 android:id="@+id/weightInput"
@@ -130,6 +129,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
+                android:hint="0"
                 android:inputType="numberDecimal" />
 
             <TextView
@@ -145,6 +145,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
+                android:hint="0"
                 android:inputType="number" />
         </LinearLayout>
 

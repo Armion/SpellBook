@@ -72,20 +72,33 @@ public class CreateItemDialog extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-
                 Money value = new Money();
                 int durability = 0;
                 float weight = 0;
 
-                try{
-
-                    value.setPlatinumPieces(Integer.parseInt( (( EditText)view.findViewById(R.id.platinumInput)).getText().toString()) );
-                    value.setGoldPieces(Integer.parseInt( (( EditText)view.findViewById(R.id.goldInput)).getText().toString()) );
-                    value.setSilverPieces(Integer.parseInt( (( EditText)view.findViewById(R.id.silverInput)).getText().toString()) );
-                    value.setCopperPieces(Integer.parseInt( (( EditText)view.findViewById(R.id.copperInput)).getText().toString()) );
-
-                    durability = Integer.parseInt( (( EditText)view.findViewById(R.id.durabilityInput)).getText().toString());
-                    weight = Float.parseFloat((( EditText)view.findViewById(R.id.weightInput)).getText().toString());
+                try {
+                    value.setPlatinumPieces(Integer.parseInt(((EditText) view.findViewById(R.id.platinumInput)).getText().toString()));
+                }
+                catch (NumberFormatException e){
+                }
+                try {
+                    value.setGoldPieces(Integer.parseInt(((EditText) view.findViewById(R.id.goldInput)).getText().toString()));
+                }
+                catch (NumberFormatException e){
+                }
+                try {
+                    value.setSilverPieces(Integer.parseInt(((EditText) view.findViewById(R.id.silverInput)).getText().toString()));
+                }
+                catch (NumberFormatException e){
+                }
+                try {
+                    value.setCopperPieces(Integer.parseInt(((EditText) view.findViewById(R.id.copperInput)).getText().toString()));
+                }
+                catch (NumberFormatException e){
+                }
+                try {
+                    durability = Integer.parseInt(((EditText) view.findViewById(R.id.durabilityInput)).getText().toString());
+                    weight = Float.parseFloat(((EditText) view.findViewById(R.id.weightInput)).getText().toString());
                 }
                 catch (NumberFormatException e){
                 }
@@ -96,7 +109,7 @@ public class CreateItemDialog extends DialogFragment {
                                     value,
                                     (( EditText)view.findViewById(R.id.inputDescription)).getText().toString(),
                                     durability,
-                                    0
+                                    weight
 
                             )
                     );

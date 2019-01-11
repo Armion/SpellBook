@@ -27,6 +27,7 @@ public abstract class FileStream {
     public static void saveLife(int life, Context context, String name){
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
+
         Character character = FileStream.getCharacter(name, context);
 
         character.setHp(life);
@@ -183,6 +184,9 @@ public abstract class FileStream {
             e.printStackTrace();
         }
 
+        if(character == null){
+            return new Character();
+        }
 
         return character;
 

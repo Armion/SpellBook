@@ -143,24 +143,24 @@ public class SlotListAdapter  extends RecyclerView.Adapter<SlotListAdapter.MyVie
              used = itemView.findViewById(R.id.usedSwitch);
 
 
-
-
-
              used.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                  @Override
                  public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
+
+
                      if(currentSpellSlot.getLevel() < currentSpellSlot.getPreparedSpell().getLevel()){
                          ((View)used).setBackgroundColor(Color.DKGRAY);
-
                      }
                      else
                      {
                          if(isChecked){
                              ((View) buttonView).setBackgroundColor(Color.RED);
+                             currentSpellSlot.setUsed(true);
                          }
                          else{
                              ((View) buttonView).setBackgroundColor(Color.WHITE);
+                             currentSpellSlot.setUsed(false);
                          }
 
                      }
@@ -221,6 +221,11 @@ public class SlotListAdapter  extends RecyclerView.Adapter<SlotListAdapter.MyVie
 
             //we actualize the selected metamagic
             currentSpellSlot = spellSlot;
+
+            if(currentSpellSlot.isUsed()){
+                used.setChecked(true);
+                System.out.println("checked !");
+            }
 
             spellName.setText(spellSlot.getPreparedSpell().getSpell().getName());
             metamagicList.setText(spellSlot.getPreparedSpell().getMetamagicList().toString());

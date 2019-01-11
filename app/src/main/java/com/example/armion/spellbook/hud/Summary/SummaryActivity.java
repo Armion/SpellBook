@@ -81,6 +81,7 @@ public class SummaryActivity extends AppCompatActivity implements View.OnClickLi
 
         character = FileStream.getCharacter("Elyndil", getBaseContext());
 
+
         pvText = findViewById(R.id.pvInput);
         pvText.setText( character.getHp() + "/" + character.getMaxHP());
 

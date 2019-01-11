@@ -182,6 +182,14 @@
             android:inputType="textMultiLine"
             android:text="@string/description" />
 
+        <EditText
+            android:id="@+id/linkInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textUri"
+            android:text="@string/link" />
+
     </LinearLayout>
 
 

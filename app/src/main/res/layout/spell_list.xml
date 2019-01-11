@@ -117,6 +117,13 @@
         android:layout_height="wrap_content"
         tools:text="Description" />
 
+    <TextView
+        android:id="@+id/spellLink"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:text="@string/link" />
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

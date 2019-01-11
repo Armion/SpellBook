@@ -27,4 +27,5 @@
     <string name="weight">Weight</string>
     <string name="durability">Durability</string>
     <string name="create_item">Create Item</string>
+    <string name="link">Link</string>
 </resources>
