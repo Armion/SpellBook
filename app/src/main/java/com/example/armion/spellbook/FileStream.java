@@ -4,8 +4,13 @@ import android.content.Context;
 import android.util.JsonReader;
 import android.widget.Toast;
 
-import com.example.armion.spellbook.spell.Metamagic;
-import com.example.armion.spellbook.spell.Spell;
+import com.example.armion.spellbook.entity.Bag;
+import com.example.armion.spellbook.entity.Character;
+import com.example.armion.spellbook.entity.Item;
+import com.example.armion.spellbook.entity.Money;
+import com.example.armion.spellbook.entity.SpellSlot;
+import com.example.armion.spellbook.entity.spell.Metamagic;
+import com.example.armion.spellbook.entity.spell.Spell;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -17,7 +22,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
-import java.util.UUID;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -63,7 +67,7 @@ public abstract class FileStream {
 
     }
 
-    public static void saveBag(List<Item> itemList, Context context, String name){
+    public static void saveItems(List<Item> itemList, Context context, String name){
 
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();

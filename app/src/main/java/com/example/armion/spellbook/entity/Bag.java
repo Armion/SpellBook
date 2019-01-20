@@ -1,4 +1,4 @@
-package com.example.armion.spellbook;
+package com.example.armion.spellbook.entity;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -13,10 +13,12 @@ import android.widget.Toast;
 
 import com.example.armion.spellbook.FileStream;
 import com.example.armion.spellbook.R;
-import com.example.armion.spellbook.SpellSlot;
+import com.example.armion.spellbook.entity.SpellSlot;
+import com.example.armion.spellbook.hud.GenericAdapter;
 import com.example.armion.spellbook.hud.Summary.SummaryActivity;
 import com.example.armion.spellbook.hud.spell.SpellBookActivity;
-import com.example.armion.spellbook.spell.Metamagic;
+import com.example.armion.spellbook.entity.spell.Metamagic;
+import com.example.armion.spellbook.hud.viewHolder.SpellSlotViewHolder;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,7 +38,7 @@ public class PreparedSpellsActivity extends AppCompatActivity implements CreateS
 
     private float x1,x2;
     static final int MIN_DISTANCE = 150;
-    private SlotListAdapter spellListAdapter;
+    private GenericAdapter<SpellSlot, SpellSlotViewHolder> spellListAdapter;
     private Button addButton;
     private Button deleteButton;
     private Button editButton;
@@ -47,9 +49,11 @@ public class PreparedSpellsActivity extends AppCompatActivity implements CreateS
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+
        spellSlotList = FileStream.getCharacter("Elyndil", this.getBaseContext()).getSpellSlotList();
 
-        spellListAdapter = new SlotListAdapter(this, spellSelected, spellSlotList);
+
+        spellListAdapter = new GenericAdapter<>(this, spellSelected, spellSlotList, R.layout.slot_list, SpellSlotViewHolder.class, SpellSlot.class);
 
 
 
@@ -159,7 +163,7 @@ public class PreparedSpellsActivity extends AppCompatActivity implements CreateS
                     // Left to Right swipe action
                     if (x2 > x1) {
                         Toast.makeText(this, "Left to Right swipe", Toast.LENGTH_SHORT).show();
-                        spellListAdapter.saveSpellSlot();
+                        spellListAdapter.saveList();
                         startActivity(new Intent(this, SummaryActivity.class));
                     }
 
@@ -167,7 +171,7 @@ public class PreparedSpellsActivity extends AppCompatActivity implements CreateS
                     else
                     {
                         Toast.makeText(this, "Right to Left swipe", Toast.LENGTH_SHORT).show ();
-                        spellListAdapter.saveSpellSlot();
+                        spellListAdapter.saveList();
                         startActivity(new Intent(this, SpellBookActivity.class));
 
                     }

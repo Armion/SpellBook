@@ -17,13 +17,15 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.armion.spellbook.Character;
+import com.example.armion.spellbook.entity.Character;
 import com.example.armion.spellbook.FileStream;
-import com.example.armion.spellbook.Item;
-import com.example.armion.spellbook.Money;
+import com.example.armion.spellbook.entity.Item;
+import com.example.armion.spellbook.entity.Money;
 import com.example.armion.spellbook.R;
+import com.example.armion.spellbook.hud.GenericAdapter;
 import com.example.armion.spellbook.hud.StatisticsActivity;
 import com.example.armion.spellbook.hud.preparedSpell.PreparedSpellsActivity;
+import com.example.armion.spellbook.hud.viewHolder.ItemViewHolder;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -46,7 +48,7 @@ public class SummaryActivity extends AppCompatActivity implements View.OnClickLi
     private  TextView silver;
     private  TextView copper;
 
-    private ItemListAdapter itemListAdapter;
+    private GenericAdapter<Item, ItemViewHolder> itemListAdapter;
     private List<Integer> selectedItems;
     private RecyclerView itemsRecycler;
 
@@ -134,6 +136,10 @@ public class SummaryActivity extends AppCompatActivity implements View.OnClickLi
                 Bundle bundle = new Bundle();
                 bundle.putString("name", item.getName());
                 bundle.putString("description", item.getDescription());
+                bundle.putString("platinium", Integer.toString( item.getValue().getPlatinumPieces()));
+                bundle.putString("gold", Integer.toString( item.getValue().getGoldPieces()));
+                bundle.putString("silver", Integer.toString( item.getValue().getSilverPieces()));
+                bundle.putString("copper", Integer.toString( item.getValue().getCopperPieces()));
 
                 editItemDialog.setArguments(bundle);
                 editItemDialog.show(getSupportFragmentManager(), "edit item");
@@ -149,14 +155,13 @@ public class SummaryActivity extends AppCompatActivity implements View.OnClickLi
                 //not really need, but it's easier to update the viewer
                 buttonClicked();
 
-
             }
 
         });
 
 
 
-        itemListAdapter = new ItemListAdapter(this, selectedItems, character.getBag().getItems());
+        itemListAdapter = new GenericAdapter(this, selectedItems, character.getBag().getItems(), R.layout.items_list, ItemViewHolder.class, Item.class);
 
         itemsRecycler = findViewById(R.id.recyclerViewItems);
 
@@ -176,11 +181,9 @@ public class SummaryActivity extends AppCompatActivity implements View.OnClickLi
             itemsRecycler.getChildAt(i).setSelected(false);
         }
 
-
         selectedItems.clear();
         deleteButton.setEnabled(false);
         editButton.setEnabled(false);
-
 
     }
 
@@ -230,7 +233,7 @@ public class SummaryActivity extends AppCompatActivity implements View.OnClickLi
 
                     }
 
-                    FileStream.saveBag(character.getBag().getItems(), this.getBaseContext(), "Elyndil");
+                    FileStream.saveItems(character.getBag().getItems(), this.getBaseContext(), "Elyndil");
 
                 }
                 else

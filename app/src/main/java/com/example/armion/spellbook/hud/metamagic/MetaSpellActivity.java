@@ -6,21 +6,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.JsonReader;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 
 import com.example.armion.spellbook.FileStream;
 import com.example.armion.spellbook.R;
+import com.example.armion.spellbook.hud.GenericAdapter;
 import com.example.armion.spellbook.hud.spell.SpellBookActivity;
-import com.example.armion.spellbook.spell.Metamagic;
+import com.example.armion.spellbook.hud.viewHolder.MetamagicViewHolder;
+import com.example.armion.spellbook.entity.spell.Metamagic;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -41,7 +38,7 @@ public class MetaSpellActivity extends AppCompatActivity implements CreateMetama
 
     private float x1,x2;
     static final int MIN_DISTANCE = 150;
-    private MetaListAdapter metaListAdapter ;
+    private GenericAdapter<Metamagic, MetamagicViewHolder> metaListAdapter ;
     private Button addButton;
     private Button deleteButton;
     private Button editButton;
@@ -54,7 +51,7 @@ public class MetaSpellActivity extends AppCompatActivity implements CreateMetama
 
         metamagicList = FileStream.getCharacter("Elyndil", this.getBaseContext()).getMetamagicList();
 
-        metaListAdapter = new MetaListAdapter(this, metamagicSelected, metamagicList);
+        metaListAdapter = new GenericAdapter(this, metamagicSelected, metamagicList, R.layout.meta_spell_list, MetamagicViewHolder.class, Metamagic.class);
 
 
 
@@ -160,7 +157,7 @@ public class MetaSpellActivity extends AppCompatActivity implements CreateMetama
 
                 if (Math.abs(deltaX) > MIN_DISTANCE && x2 > x1)
                 {
-                    metaListAdapter.saveMetamagic();
+                    metaListAdapter.saveList();
                     startActivity(new Intent(this, SpellBookActivity.class));
 
                 }

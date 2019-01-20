@@ -1,10 +1,14 @@
-package com.example.armion.spellbook;
+package com.example.armion.spellbook.entity;
 
-import com.example.armion.spellbook.spell.PreparedSpell;
+import android.content.Context;
 
+import com.example.armion.spellbook.FileStream;
+import com.example.armion.spellbook.entity.spell.PreparedSpell;
+
+import java.util.List;
 import java.util.UUID;
 
-public class SpellSlot {
+public class SpellSlot extends Entity{
 
     private PreparedSpell preparedSpell;
     private int level;
@@ -58,4 +62,8 @@ public class SpellSlot {
         this.id = id;
     }
 
+    @Override
+    public void save(List<? extends Entity> entityList, Context context, String name) {
+        FileStream.saveSpellSlot((List<SpellSlot>) entityList, context, "Elyndil");
+    }
 }

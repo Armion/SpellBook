@@ -1,6 +1,12 @@
-package com.example.armion.spellbook;
+package com.example.armion.spellbook.entity;
 
-public class Item {
+import android.content.Context;
+
+import com.example.armion.spellbook.FileStream;
+
+import java.util.List;
+
+public class Item extends Entity{
 
     private String name;
     private Money value;
@@ -63,5 +69,11 @@ public class Item {
 
     public void setWeight(float weight) {
         this.weight = weight;
+    }
+
+    @Override
+    public void save(List<? extends Entity> entityList, Context context, String name) {
+
+        FileStream.saveItems((List<Item>) entityList, context, name);
     }
 }

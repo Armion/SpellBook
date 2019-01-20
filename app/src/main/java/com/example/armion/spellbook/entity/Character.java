@@ -3,15 +3,13 @@
  * @version 0.01
  */
 
-package com.example.armion.spellbook;
+package com.example.armion.spellbook.entity;
 
-import com.example.armion.spellbook.spell.Metamagic;
-import com.example.armion.spellbook.spell.PreparedSpell;
-import com.example.armion.spellbook.spell.Spell;
+import com.example.armion.spellbook.entity.spell.Metamagic;
+import com.example.armion.spellbook.entity.spell.Spell;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 public class Character {
 

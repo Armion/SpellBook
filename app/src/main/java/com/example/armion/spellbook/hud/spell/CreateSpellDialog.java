@@ -20,11 +20,11 @@ import android.widget.Spinner;
 
 import com.androidbuts.multispinnerfilter.MultiSpinner;
 import com.androidbuts.multispinnerfilter.MultiSpinnerListener;
-import com.example.armion.spellbook.Dice;
+import com.example.armion.spellbook.entity.Dice;
 import com.example.armion.spellbook.R;
-import com.example.armion.spellbook.spell.Descriptor;
-import com.example.armion.spellbook.spell.School;
-import com.example.armion.spellbook.spell.Spell;
+import com.example.armion.spellbook.entity.spell.Descriptor;
+import com.example.armion.spellbook.entity.spell.School;
+import com.example.armion.spellbook.entity.spell.Spell;
 
 
 import java.util.ArrayList;

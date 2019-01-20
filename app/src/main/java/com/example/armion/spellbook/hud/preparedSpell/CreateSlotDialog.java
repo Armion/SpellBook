@@ -15,13 +15,13 @@ import android.widget.Spinner;
 
 import com.androidbuts.multispinnerfilter.MultiSpinner;
 import com.androidbuts.multispinnerfilter.MultiSpinnerListener;
-import com.example.armion.spellbook.Character;
+import com.example.armion.spellbook.entity.Character;
 import com.example.armion.spellbook.FileStream;
 import com.example.armion.spellbook.R;
-import com.example.armion.spellbook.SpellSlot;
-import com.example.armion.spellbook.spell.Metamagic;
-import com.example.armion.spellbook.spell.PreparedSpell;
-import com.example.armion.spellbook.spell.Spell;
+import com.example.armion.spellbook.entity.SpellSlot;
+import com.example.armion.spellbook.entity.spell.Metamagic;
+import com.example.armion.spellbook.entity.spell.PreparedSpell;
+import com.example.armion.spellbook.entity.spell.Spell;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

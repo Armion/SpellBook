@@ -14,9 +14,11 @@ import android.widget.Toast;
 
 import com.example.armion.spellbook.FileStream;
 import com.example.armion.spellbook.R;
+import com.example.armion.spellbook.hud.GenericAdapter;
 import com.example.armion.spellbook.hud.preparedSpell.PreparedSpellsActivity;
 import com.example.armion.spellbook.hud.metamagic.MetaSpellActivity;
-import com.example.armion.spellbook.spell.Spell;
+import com.example.armion.spellbook.entity.spell.Spell;
+import com.example.armion.spellbook.hud.viewHolder.SpellViewHolder;
 
 
 import java.util.ArrayList;
@@ -38,7 +40,7 @@ public class SpellBookActivity extends AppCompatActivity implements CreateSpellD
 
     private float x1,x2;
     static final int MIN_DISTANCE = 150;
-    private SpellListAdapter spellListAdapter;
+    private GenericAdapter<Spell, SpellViewHolder> spellListAdapter;
     private Button addButton;
     private Button deleteButton;
     private Button editButton;
@@ -51,7 +53,7 @@ public class SpellBookActivity extends AppCompatActivity implements CreateSpellD
 
         spellList = FileStream.getCharacter("Elyndil", this.getBaseContext()).getSpellList();
 
-        spellListAdapter = new SpellListAdapter(this, spellSelected, spellList);
+        spellListAdapter = new GenericAdapter(this, spellSelected, spellList, R.layout.spell_list, SpellViewHolder.class, Spell.class);
 
 
 
@@ -167,7 +169,7 @@ public class SpellBookActivity extends AppCompatActivity implements CreateSpellD
                     // Left to Right swipe action
                     if (x2 > x1) {
                         Toast.makeText(this, "Left to Right swipe", Toast.LENGTH_SHORT).show();
-                        spellListAdapter.saveSpell();
+                        spellListAdapter.saveList();
                         startActivity(new Intent(this, PreparedSpellsActivity.class));
                     }
 
@@ -175,7 +177,7 @@ public class SpellBookActivity extends AppCompatActivity implements CreateSpellD
                     else
                     {
                         Toast.makeText(this, "Right to Left swipe", Toast.LENGTH_SHORT).show ();
-                        spellListAdapter.saveSpell();
+                        spellListAdapter.saveList();
                         startActivity(new Intent(this, MetaSpellActivity.class));
 
                     }

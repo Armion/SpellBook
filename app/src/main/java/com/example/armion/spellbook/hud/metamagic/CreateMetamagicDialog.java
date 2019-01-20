@@ -12,7 +12,7 @@ import android.widget.EditText;
 
 
 import com.example.armion.spellbook.R;
-import com.example.armion.spellbook.spell.Metamagic;
+import com.example.armion.spellbook.entity.spell.Metamagic;
 
 
 

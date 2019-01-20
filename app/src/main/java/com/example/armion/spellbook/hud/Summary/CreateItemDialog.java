@@ -10,8 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 
-import com.example.armion.spellbook.Item;
-import com.example.armion.spellbook.Money;
+import com.example.armion.spellbook.entity.Item;
+import com.example.armion.spellbook.entity.Money;
 import com.example.armion.spellbook.R;
 
 
@@ -56,12 +56,35 @@ public class CreateItemDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
         //if this is called with args for the metamagic
-        try{
-            ((EditText)view.findViewById(R.id.inputName)).setText(getArguments().getString("name"));
-            ((EditText)view.findViewById(R.id.inputDescription)).setText(getArguments().getString("description"));
+        try {
+            ((EditText) view.findViewById(R.id.inputName)).setText(getArguments().getString("name"));
         }
         catch (NullPointerException e){
-
+        }
+        try {
+            ((EditText) view.findViewById(R.id.inputDescription)).setText(getArguments().getString("description"));
+        }
+        catch (NullPointerException e){
+        }
+        try {
+            ((EditText) view.findViewById(R.id.platinumInput)).setText(getArguments().getString("platinium"));
+        }
+        catch (NullPointerException e){
+        }
+        try {
+            ((EditText) view.findViewById(R.id.goldInput)).setText(getArguments().getString("gold"));
+        }
+        catch (NullPointerException e){
+        }
+        try {
+            ((EditText) view.findViewById(R.id.silverInput)).setText(getArguments().getString("silver"));
+        }
+        catch (NullPointerException e){
+        }
+        try {
+            ((EditText)view.findViewById(R.id.copperInput)).setText(getArguments().getString("copper"));
+        }
+        catch (NullPointerException e){
         }
 
 

@@ -1,4 +1,4 @@
-package com.example.armion.spellbook;
+package com.example.armion.spellbook.entity;
 
 public class Money {
 
