@@ -1,8 +1,14 @@
-package com.example.armion.spellbook.spell;
+package com.example.armion.spellbook.entity.spell;
 
+import android.content.Context;
+
+import com.example.armion.spellbook.FileStream;
+import com.example.armion.spellbook.entity.Entity;
+
+import java.util.List;
 import java.util.UUID;
 
-public class Metamagic {
+public class Metamagic extends Entity {
 
     String name;
     int level;
@@ -68,5 +74,10 @@ public class Metamagic {
     @Override
     public String toString(){
         return this.name;
+    }
+
+    @Override
+    public void save(List<? extends Entity> entityList, Context context, String name) {
+        FileStream.saveMetamagic((List<Metamagic>) entityList, context, "Elyndil");
     }
 }

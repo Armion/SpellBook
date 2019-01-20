@@ -3,16 +3,20 @@
  * @version 0.01
  */
 
-package com.example.armion.spellbook.spell;
+package com.example.armion.spellbook.entity.spell;
 
 
-import com.example.armion.spellbook.Dice;
+import android.content.Context;
+
+import com.example.armion.spellbook.FileStream;
+import com.example.armion.spellbook.entity.Dice;
+import com.example.armion.spellbook.entity.Entity;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class Spell {
+public class Spell extends Entity {
 
     private  School school;
     private String range;
@@ -158,5 +162,10 @@ public class Spell {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    @Override
+    public void save(List<? extends Entity> entityList, Context context, String name) {
+        FileStream.saveSpell((List<Spell>)entityList, context, "Elyndil");
     }
 }

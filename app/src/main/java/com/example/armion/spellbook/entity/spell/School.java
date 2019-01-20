@@ -3,7 +3,7 @@
  * @version 0.01
  */
 
-package com.example.armion.spellbook.spell;
+package com.example.armion.spellbook.entity.spell;
 
 public enum School {
 

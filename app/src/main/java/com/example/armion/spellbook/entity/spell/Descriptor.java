@@ -4,11 +4,7 @@
  */
 
 
-package com.example.armion.spellbook.spell;
-
-import android.content.Context;
-
-import com.example.armion.spellbook.R;
+package com.example.armion.spellbook.entity.spell;
 
 public enum Descriptor {
 
